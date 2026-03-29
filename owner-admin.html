@@ -484,12 +484,10 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="form-label">圖片 IMAGE (自動壓縮)</label>
-                        <div class="image-upload" onclick="document.getElementById('editProductImage').click()" style="border: 2px dashed #ccc; border-radius: 8px; padding: 20px; text-align: center; cursor: pointer;">
-                            <input type="file" id="editProductImage" accept="image/*" capture="environment" style="display: none;" onchange="previewEditImage(this)">
-                            <div id="editUploadText">📷 點擊更換照片<br><small style="color:#999;">自動壓縮</small></div>
-                            <img id="editImagePreview" style="max-width: 150px; max-height: 150px; margin-top: 10px; display: none; border-radius: 8px;">
-                        </div>
+                        <label class="form-label">圖片 IMAGE</label>
+                        <input type="file" id="editProductImage" accept="image/*" capture="environment" onchange="previewEditImage(this)" style="width: 100%; padding: 10px; border: 2px dashed #ccc; border-radius: 8px;">
+                        <div id="editUploadText" style="margin-top: 8px; font-size: 12px; color: #666;">點擊選擇新照片</div>
+                        <img id="editImagePreview" style="max-width: 100%; max-height: 150px; margin-top: 10px; display: none; border-radius: 8px;">
                     </div>
                     <div style="display: flex; gap: 8px; margin-top: 16px;">
                         <button type="button" class="btn btn-primary" style="flex: 1;" onclick="handleEditProduct()">✅ 保存 SAVE</button>
@@ -536,12 +534,10 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="form-label">產品圖片 IMAGE (自動壓縮)</label>
-                            <div class="image-upload" onclick="document.getElementById('productImage').click()" style="border: 2px dashed #ccc; border-radius: 8px; padding: 20px; text-align: center; cursor: pointer;">
-                                <input type="file" id="productImage" accept="image/*" capture="environment" style="display: none;" onchange="previewProductImage(this)">
-                                <div id="uploadText">📷 點擊拍攝或選擇照片<br><small style="color:#999;">自動壓縮至合適大小</small></div>
-                                <img id="productImagePreview" style="max-width: 150px; max-height: 150px; margin-top: 10px; display: none; border-radius: 8px;">
-                            </div>
+                            <label class="form-label">產品圖片 IMAGE</label>
+                            <input type="file" id="productImage" accept="image/*" capture="environment" onchange="previewProductImage(this)" style="width: 100%; padding: 10px; border: 2px dashed #ccc; border-radius: 8px;">
+                            <div id="uploadText" style="margin-top: 8px; font-size: 12px; color: #666;">點擊上方選擇照片</div>
+                            <img id="productImagePreview" style="max-width: 100%; max-height: 150px; margin-top: 10px; display: none; border-radius: 8px;">
                         </div>
                         <button type="button" class="btn btn-primary" style="padding: 14px;" onclick="handleAddProduct()">✅ 保存產品 SAVE PRODUCT</button>
                     </div>
