@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>新天利裝飾材料 | Sun Tin Lee</title>
     <style>
-        /* Business Card Exact Colors */
         :root {
             --red: #B73A33;
             --cream: #F3EDE6;
@@ -26,33 +25,22 @@
             padding-bottom: 70px;
         }
         
-        /* Header - Matches Business Card */
+        /* Header - Red Bar like Business Card */
         .header {
             background: var(--red);
-            padding: 20px;
+            padding: 16px;
             text-align: center;
         }
         
-        .logo-area {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            margin-bottom: 8px;
-        }
-        
-        .logo-img {
-            width: 50px;
-            height: 50px;
-            border-radius: 6px;
-            background: var(--white);
-            object-fit: contain;
+        .company-names {
+            margin-bottom: 12px;
         }
         
         .company-name {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: bold;
             color: var(--white);
+            margin-bottom: 2px;
         }
         
         .company-name-en {
@@ -60,8 +48,27 @@
             color: rgba(255,255,255,0.9);
         }
         
-        /* Info Card - Matches Business Card */
-        .info-card {
+        .logo-area {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+        
+        .logo-img {
+            width: 45px;
+            height: 45px;
+            border-radius: 6px;
+            background: var(--white);
+            object-fit: contain;
+        }
+        
+        .logo-text {
+            text-align: left;
+        }
+        
+        /* Products List Section */
+        .products-section {
             background: var(--white);
             margin: 16px;
             padding: 16px;
@@ -69,17 +76,58 @@
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
         
+        .products-title {
+            font-size: 14px;
+            font-weight: bold;
+            color: var(--navy);
+            margin-bottom: 12px;
+            text-align: center;
+        }
+        
+        .products-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6px 12px;
+        }
+        
+        .product-item {
+            font-size: 11px;
+            color: var(--navy);
+            padding: 4px 0;
+            border-bottom: 1px solid rgba(183,58,51,0.2);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .product-bullet {
+            width: 8px;
+            height: 8px;
+            background: var(--red);
+            border-radius: 2px;
+            flex-shrink: 0;
+        }
+        
+        /* Info Cards */
+        .info-card {
+            background: var(--white);
+            margin: 0 16px 16px 16px;
+            padding: 14px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
         .info-row {
             display: flex;
-            align-items: flex-start;
-            margin-bottom: 12px;
+            align-items: center;
+            margin-bottom: 8px;
         }
         
         .info-row:last-child { margin-bottom: 0; }
         
         .info-icon {
-            width: 24px;
-            height: 24px;
+            width: 22px;
+            height: 22px;
             background: var(--red);
             border-radius: 4px;
             display: flex;
@@ -87,15 +135,7 @@
             justify-content: center;
             margin-right: 10px;
             color: white;
-            font-size: 12px;
-        }
-        
-        .info-content { flex: 1; }
-        
-        .info-label {
-            font-size: 10px;
-            color: var(--grey);
-            text-transform: uppercase;
+            font-size: 11px;
         }
         
         .info-value {
@@ -127,10 +167,9 @@
             color: var(--white);
         }
         
-        /* Categories */
-        .categories {
+        /* Shop Section */
+        .shop-section {
             padding: 0 16px;
-            margin-bottom: 16px;
         }
         
         .section-title {
@@ -144,15 +183,17 @@
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 8px;
+            margin-bottom: 16px;
         }
         
         .category-card {
             background: var(--white);
             border: 1px solid rgba(34,45,62,0.1);
             border-radius: 8px;
-            padding: 12px 8px;
+            padding: 10px 6px;
             text-align: center;
             cursor: pointer;
+            font-size: 10px;
         }
         
         .category-card.active {
@@ -160,12 +201,7 @@
             color: var(--white);
         }
         
-        .category-icon { font-size: 20px; margin-bottom: 4px; }
-        
-        .category-name {
-            font-size: 10px;
-            font-weight: bold;
-        }
+        .category-icon { font-size: 18px; margin-bottom: 4px; }
         
         /* Products */
         .products { padding: 0 16px; }
@@ -174,32 +210,32 @@
             background: var(--white);
             border: 1px solid rgba(34,45,62,0.1);
             border-radius: 10px;
-            padding: 14px;
-            margin-bottom: 12px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+            padding: 12px;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
         }
         
         .product-img {
             width: 100%;
-            height: 150px;
+            height: 140px;
             object-fit: cover;
             border-radius: 6px;
             background: var(--cream);
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
         
         .product-name {
-            font-size: 14px;
+            font-size: 13px;
             font-weight: bold;
             color: var(--navy);
             margin-bottom: 4px;
         }
         
         .product-desc {
-            font-size: 12px;
+            font-size: 11px;
             color: var(--grey);
-            margin-bottom: 10px;
-            line-height: 1.4;
+            margin-bottom: 8px;
+            line-height: 1.3;
         }
         
         .product-footer {
@@ -209,23 +245,21 @@
         }
         
         .product-price {
-            font-size: 16px;
+            font-size: 15px;
             font-weight: bold;
             color: var(--red);
         }
         
         .add-btn {
-            padding: 8px 16px;
+            padding: 6px 14px;
             background: var(--navy);
             color: var(--white);
             border: none;
-            border-radius: 6px;
-            font-size: 12px;
+            border-radius: 4px;
+            font-size: 11px;
             font-weight: bold;
             cursor: pointer;
         }
-        
-        .add-btn:hover { background: var(--red); }
         
         /* Cart Bar */
         .cart-bar {
@@ -237,7 +271,7 @@
             max-width: 400px;
             background: var(--navy);
             color: var(--white);
-            padding: 14px 16px;
+            padding: 12px 16px;
             display: none;
             z-index: 100;
         }
@@ -255,26 +289,26 @@
         }
         
         .cart-count {
-            width: 28px;
-            height: 28px;
+            width: 26px;
+            height: 26px;
             background: var(--red);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 13px;
+            font-size: 12px;
             font-weight: bold;
         }
         
-        .cart-total { font-size: 18px; font-weight: bold; }
+        .cart-total { font-size: 16px; font-weight: bold; }
         
         .checkout-btn {
-            padding: 10px 20px;
+            padding: 8px 16px;
             background: var(--red);
             color: var(--white);
             border: none;
-            border-radius: 6px;
-            font-size: 14px;
+            border-radius: 4px;
+            font-size: 13px;
             font-weight: bold;
             cursor: pointer;
         }
@@ -287,23 +321,42 @@
             transform: translate(-50%, -50%);
             background: rgba(34,45,62,0.9);
             color: var(--white);
-            padding: 16px 32px;
+            padding: 14px 28px;
             border-radius: 8px;
-            font-size: 16px;
+            font-size: 15px;
             z-index: 200;
             display: none;
         }
     </style>
 </head>
 <body>
-    <!-- Header - Matches Business Card -->
+    <!-- Header -->
     <div class="header">
+        <div class="company-names">
+            <div class="company-name">新天利裝飾材料有限公司</div>
+            <div class="company-name-en">SUN TIN LEE DECORATION AND METAL MATERIALS LIMITED</div>
+        </div>
         <div class="logo-area">
             <img src="Logo.jpg" class="logo-img">
-            <div>
-                <div class="company-name">新天利裝飾材料有限公司</div>
-                <div class="company-name-en">SUN TIN LEE</div>
+            <div class="logo-text">
+                <div class="company-name">毅信裝飾材料有限公司</div>
+                <div class="company-name-en">NGAI SHUN DECORATION AND MATERIALS CO., LTD.</div>
             </div>
+        </div>
+    </div>
+    
+    <!-- Products List from Card -->
+    <div class="products-section">
+        <div class="products-title">【產品介紹 PRODUCTS】</div>
+        <div class="products-grid">
+            <div class="product-item"><div class="product-bullet"></div>代理各類家具五金</div>
+            <div class="product-item"><div class="product-bullet"></div>輕重型抽屜路軌</div>
+            <div class="product-item"><div class="product-bullet"></div>各國裝飾五金</div>
+            <div class="product-item"><div class="product-bullet"></div>家具材料</div>
+            <div class="product-item"><div class="product-bullet"></div>一級柚木門配件</div>
+            <div class="product-item"><div class="product-bullet"></div>鋁合金趟門路軌</div>
+            <div class="product-item"><div class="product-bullet"></div>電動工具</div>
+            <div class="product-item"><div class="product-bullet"></div>天花材料</div>
         </div>
     </div>
     
@@ -311,17 +364,11 @@
     <div class="info-card">
         <div class="info-row">
             <div class="info-icon">📍</div>
-            <div class="info-content">
-                <div class="info-label" id="addrLabel">ADDRESS</div>
-                <div class="info-value" id="addrValue">248 Lockhart Road, Wan Chai</div>
-            </div>
+            <div class="info-value" id="addrValue">248 Lockhart Road, G/F., Wanchai, Hong Kong</div>
         </div>
         <div class="info-row">
             <div class="info-icon">📞</div>
-            <div class="info-content">
-                <div class="info-label" id="phoneLabel">TEL</div>
-                <div class="info-value" id="phoneValue">(852) 2507 4944</div>
-            </div>
+            <div class="info-value">2507 4944</div>
         </div>
     </div>
     
@@ -331,25 +378,27 @@
         <button class="lang-btn" id="btnZh" onclick="setLang('zh')">中文</button>
     </div>
     
-    <!-- Categories -->
-    <div class="categories">
-        <div class="section-title" id="catTitle">PRODUCTS</div>
+    <!-- Shop Section -->
+    <div class="shop-section">
+        <div class="section-title" id="shopTitle">【網上訂購 ONLINE SHOP】</div>
+        
+        <!-- Categories -->
         <div class="category-grid">
             <div class="category-card active" onclick="filterCat('all')">
                 <div class="category-icon">🛒</div>
-                <div class="category-name" id="catAll">全部</div>
+                <div id="catAll">全部 ALL</div>
             </div>
             <div class="category-card" onclick="filterCat('metal')">
                 <div class="category-icon">🔩</div>
-                <div class="category-name" id="catMetal">金屬</div>
+                <div id="catMetal">金屬 METAL</div>
             </div>
             <div class="category-card" onclick="filterCat('decoration')">
                 <div class="category-icon">🎨</div>
-                <div class="category-name" id="catDeco">裝飾</div>
+                <div id="catDeco">裝飾 DECO</div>
             </div>
             <div class="category-card" onclick="filterCat('tools')">
                 <div class="category-icon">🛠️</div>
-                <div class="category-name" id="catTools">工具</div>
+                <div id="catTools">工具 TOOLS</div>
             </div>
         </div>
     </div>
@@ -364,7 +413,7 @@
                 <div class="cart-count" id="cartCount">0</div>
                 <div class="cart-total" id="cartTotal">HK$0</div>
             </div>
-            <button class="checkout-btn" id="checkoutBtn" onclick="checkout()">結帳</button>
+            <button class="checkout-btn" id="checkoutBtn" onclick="checkout()">結帳 CHECKOUT</button>
         </div>
     </div>
     
@@ -372,34 +421,27 @@
     <div class="toast" id="toast"></div>
     
     <script>
-        // Translations
         const t = {
             en: {
-                addrLabel: 'ADDRESS',
-                addrValue: '248 Lockhart Road, Wan Chai, Hong Kong',
-                phoneLabel: 'TEL',
-                phoneValue: '(852) 2507 4944',
-                catTitle: 'PRODUCTS',
+                addrValue: '248 Lockhart Road, G/F., Wanchai, Hong Kong',
+                shopTitle: 'ONLINE SHOP',
                 catAll: '全部 ALL',
                 catMetal: '金屬 METAL',
                 catDeco: '裝飾 DECO',
                 catTools: '工具 TOOLS',
-                addToCart: 'ADD TO CART',
+                addToCart: 'ADD',
                 added: 'ADDED!',
                 checkout: 'CHECKOUT',
                 empty: 'No products yet'
             },
             zh: {
-                addrLabel: '地址',
-                addrValue: '香港灣仔駱克道248號',
-                phoneLabel: '電話',
-                phoneValue: '(852) 2507 4944',
-                catTitle: '產品',
+                addrValue: '香港灣仔駱克道248號地下',
+                shopTitle: '網上訂購',
                 catAll: '全部',
                 catMetal: '金屬材料',
                 catDeco: '裝飾材料',
                 catTools: '工具',
-                addToCart: '加入購物車',
+                addToCart: '加入',
                 added: '已加入！',
                 checkout: '結帳',
                 empty: '暫無產品'
@@ -410,7 +452,6 @@
         let cart = [];
         let products = [];
         
-        // Load products from API
         async function loadProducts() {
             try {
                 const res = await fetch('/api/products');
@@ -421,14 +462,12 @@
             }
         }
         
-        // Render products
         function renderProducts() {
             const list = document.getElementById('productsList');
             if (products.length === 0) {
                 list.innerHTML = '<p style="text-align:center;padding:40px;color:#81766D;">' + t[currentLang].empty + '</p>';
                 return;
             }
-            
             list.innerHTML = products.map(p => `
                 <div class="product-card">
                     <img src="${p.image || 'https://via.placeholder.com/300x200?text=No+Image'}" class="product-img" onerror="this.src='https://via.placeholder.com/300x200?text=No+Image'">
@@ -442,11 +481,9 @@
             `).join('');
         }
         
-        // Filter by category
         function filterCat(cat) {
             document.querySelectorAll('.category-card').forEach(c => c.classList.remove('active'));
             event.target.closest('.category-card').classList.add('active');
-            
             if (cat === 'all') {
                 renderProducts();
             } else {
@@ -470,18 +507,13 @@
             }
         }
         
-        // Set language
         function setLang(lang) {
             currentLang = lang;
             document.getElementById('btnEn').classList.toggle('active', lang === 'en');
             document.getElementById('btnZh').classList.toggle('active', lang === 'zh');
-            
             const tx = t[lang];
-            document.getElementById('addrLabel').textContent = tx.addrLabel;
             document.getElementById('addrValue').textContent = tx.addrValue;
-            document.getElementById('phoneLabel').textContent = tx.phoneLabel;
-            document.getElementById('phoneValue').textContent = tx.phoneValue;
-            document.getElementById('catTitle').textContent = tx.catTitle;
+            document.getElementById('shopTitle').textContent = '【' + tx.shopTitle + '】';
             document.getElementById('catAll').textContent = tx.catAll;
             document.getElementById('catMetal').textContent = tx.catMetal;
             document.getElementById('catDeco').textContent = tx.catDeco;
@@ -490,7 +522,6 @@
             renderProducts();
         }
         
-        // Add to cart
         function addToCart(id) {
             const product = products.find(p => p.id === id);
             if (product) {
@@ -500,7 +531,6 @@
             }
         }
         
-        // Update cart
         function updateCart() {
             const bar = document.getElementById('cartBar');
             if (cart.length > 0) {
@@ -513,7 +543,6 @@
             }
         }
         
-        // Show toast
         function showToast(msg) {
             const toast = document.getElementById('toast');
             toast.textContent = msg;
@@ -521,14 +550,12 @@
             setTimeout(() => toast.style.display = 'none', 1500);
         }
         
-        // Checkout
         function checkout() {
             if (cart.length === 0) return;
             const total = cart.reduce((sum, p) => sum + p.price, 0);
             alert('Order Total: HK$' + total.toFixed(2) + '\n\nPayMe QR would appear here.');
         }
         
-        // Init
         loadProducts();
     </script>
 </body>
