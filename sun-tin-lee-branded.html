@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>新天利裝飾材料 | Sun Tin Lee Decoration & Metal</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Sun Tin Lee Brand Colors - Adjusted to match business card */
+        :root {
+            --sun-orange: #ff6b00;      /* More vibrant orange-red */
+            --sun-dark-orange: #d84315;  /* Darker, richer orange */
+            --sun-light: #ffecb3;        /* Warmer light orange */
+        }
+        
+        body { 
+            max-width: 400px; 
+            margin: 0 auto; 
+            background: #f8f9fa; 
+            font-family: 'Helvetica Neue', Arial, 'PingFang SC', sans-serif; 
+        }
+        
+        /* Header with brand gradient */
+        .header { 
+            background: linear-gradient(135deg, var(--sun-dark-orange) 0%, var(--sun-orange) 100%); 
+            color: white; 
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(230, 81, 0, 0.3);
+        }
+        
+        .company-badge { 
+            background: rgba(255,255,255,0.3); 
+            padding: 5px 12px; 
+            border-radius: 20px; 
+            font-size: 0.8em; 
+            font-weight: bold;
+            display: inline-block;
+            margin-top: 8px;
+        }
+        
+        /* Category buttons in brand colors */
+        .category-btn { 
+            border: 2px solid var(--sun-orange); 
+            color: var(--sun-dark-orange); 
+            background: white; 
+            border-radius: 20px; 
+            padding: 8px 20px; 
+            margin: 5px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .category-btn.active { 
+            background: linear-gradient(135deg, var(--sun-dark-orange) 0%, var(--sun-orange) 100%); 
+            color: white; 
+            border: none;
+            box-shadow: 0 2px 8px rgba(230, 81, 0, 0.3);
+        }
+        
+        .category-btn:hover:not(.active) {
+            background: var(--sun-light);
+        }
+        
+        /* Contact bar */
+        .contact-bar { 
+            background: var(--sun-dark-orange); 
+            color: white; 
+            padding: 12px; 
+            text-align: center; 
+            font-size: 0.9em; 
+            font-weight: 500;
+            border-bottom: 3px solid var(--sun-orange);
+        }
+        
+        /* Product cards with brand accent */
+        .product-card { 
+            border: 1px solid #e0e0e0; 
+            border-radius: 12px; 
+            margin: 15px; 
+            background: white; 
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            border-left: 4px solid var(--sun-orange);
+            transition: transform 0.2s;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+        }
+        
+        /* Checkout button in brand colors */
+        .brand-btn {
+            background: linear-gradient(135deg, var(--sun-dark-orange) 0%, var(--sun-orange) 100%);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        
+        .brand-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(230, 81, 0, 0.3);
+        }
+        
+        /* Language buttons */
+        .lang-btn {
+            background: rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.4);
+            color: white;
+        }
+        
+        .lang-btn:hover {
+            background: white;
+            color: var(--sun-dark-orange);
+        }
+        
+        .chinese-font { 
+            font-family: 'Microsoft JhengHei', 'PingFang SC', sans-serif; 
+            font-weight: 600;
+        }
+        
+        /* Price styling */
+        .price-tag {
+            color: var(--sun-dark-orange);
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="d-flex justify-content-between align-items-center">
+            <div>
+                <div class="d-flex align-items-center">
+                    <div class="logo-circle me-2" style="width: 40px; height: 40px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; color: #d84315; font-size: 1.2em; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">新</div>
+                    <div>
+                        <h4 class="mb-1 chinese-font" style="font-weight: 700;">新天利裝飾材料</h4>
+                        <p class="mb-0" style="font-size: 0.9em; opacity: 0.9;">Sun Tin Lee Decoration & Metal Materials</p>
+                    </div>
+                </div>
+                <div class="company-badge">Est. 1992 • Lockhart Road, Wan Chai</div>
+            </div>
+            <div>
+                <button class="btn btn-sm lang-btn" onclick="setLang('en')">EN</button>
+                <button class="btn btn-sm lang-btn" onclick="setLang('zh')">中文</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Bar -->
+    <div class="contact-bar">
+        <span id="contactText">Call: +852 2507 4944 | Lockhart Road, Wan Chai</span>
+    </div>
+
+    <!-- Categories -->
+    <div class="p-3 bg-white">
+        <h6 class="mb-3 chinese-font" id="categoryTitle">產品分類</h6>
+        <div class="d-flex flex-wrap">
+            <button class="category-btn active" onclick="setCategory('all')" id="catAll">All / 全部</button>
+            <button class="category-btn" onclick="setCategory('metal')" id="catMetal">Metal / 金屬材料</button>
+            <button class="category-btn" onclick="setCategory('decoration')" id="catDecoration">Decoration / 裝飾材料</button>
+            <button class="category-btn" onclick="setCategory('tools')" id="catTools">Tools / 工具</button>
+        </div>
+    </div>
+
+    <!-- Products -->
+    <div class="p-3" id="productsContainer">
+        <div class="text-center py-4">
+            <div class="spinner-border text-primary" role="status"></div>
+            <p class="mt-2" id="loadingText">Loading products...</p>
+        </div>
+    </div>
+
+    <!-- Cart Summary -->
+    <div class="cart-summary" id="cartSummary" style="display: none; position: fixed; bottom: 0; left: 0; right: 0; background: white; padding: 15px; border-top: 3px solid var(--sun-orange); box-shadow: 0 -2px 10px rgba(0,0,0,0.1);">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <span id="cartItemsCount">0 items</span>
+            <strong class="price-tag" id="cartTotal">HK$0.00</strong>
+        </div>
+        <button class="btn brand-btn w-100" onclick="checkout()" id="checkoutBtn">
+            Checkout with PayMe
+        </button>
+    </div>
+
+    <!-- About Modal -->
+    <div class="modal fade" id="aboutModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header" style="background: linear-gradient(135deg, var(--sun-dark-orange) 0%, var(--sun-orange) 100%); color: white;">
+                    <h5 class="modal-title chinese-font">關於新天利</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p><strong class="chinese-font">新天利裝飾材料有限公司</strong></p>
+                    <p>Sun Tin Lee Decoration & Metal Materials Limited</p>
+                    <p><i class="bi bi-calendar-check"></i> Established: 1992</p>
+                    <p><i class="bi bi-geo-alt"></i> Location: Lockhart Road, Wan Chai, Hong Kong</p>
+                    <p><i class="bi bi-telephone"></i> Phone: +852 2507 4944</p>
+                    <hr>
+                    <p class="mt-3">Specializing in metal materials and decoration supplies for contractors, builders, and DIY projects.</p>
+                    <p class="text-muted">33 years of trusted service in Hong Kong.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Bilingual content for Sun Tin Lee
+        const translations = {
+            en: {
+                categoryTitle: 'Product Categories',
+                catAll: 'All',
+                catMetal: 'Metal Materials',
+                catDecoration: 'Decoration Supplies',
+                catTools: 'Tools',
+                contactText: 'Call: +852 2507 4944 | Lockhart Road, Wan Chai',
+                loadingText: 'Loading products...',
+                addToCart: 'Add to Cart',
+                checkoutBtn: 'Checkout with PayMe',
+                aboutTitle: 'About Sun Tin Lee',
+                companyDesc: '33 years of trusted service in Hong Kong'
+            },
+            zh: {
+                categoryTitle: '產品分類',
+                catAll: '全部',
+                catMetal: '金屬材料',
+                catDecoration: '裝飾材料',
+                catTools: '工具',
+                contactText: '電話: +852 2507 4944 | 灣仔駱克道',
+                loadingText: '載入產品中...',
+                addToCart: '加入購物車',
+                checkoutBtn: '使用PayMe結帳',
+                aboutTitle: '關於新天利',
+                companyDesc: '33年香港信譽服務'
+            }
+        };
+
+        // Sample products for Sun Tin Lee
+        const products = [
+            {
+                id: 1,
+                name: { en: 'Stainless Steel Sheet 304', zh: '304不鏽鋼板' },
+                description: { en: '2mm thickness, 4x8 feet', zh: '2毫米厚度，4x8英尺' },
+                price: 1280.00,
+                category: 'metal',
+                unit: 'sheet'
+            },
+            {
+                id: 2,
+                name: { en: 'Aluminum Angle Bar', zh: '鋁角鐵' },
+                description: { en: '1" x 1" x 1/8", 6 feet length', zh: '1吋 x 1吋 x 1/8吋，6英尺長' },
+                price: 85.50,
+                category: 'metal',
+                unit: 'piece'
+            },
+            {
+                id: 3,
+                name: { en: 'Decorative Wall Panel', zh: '裝飾牆板' },
+                description: { en: 'Wood grain PVC, 4x8 feet', zh: '木紋PVC，4x8英尺' },
+                price: 320.00,
+                category: 'decoration',
+                unit: 'panel'
+            },
+            {
+                id: 4,
+                name: { en: 'Paint Roller Set', zh: '油漆滾筒套裝' },
+                description: { en: 'Professional 9-piece set', zh: '專業9件套裝' },
+                price: 189.90,
+                category: 'tools',
+                unit: 'set'
+            },
+            {
+                id: 5,
+                name: { en: 'Copper Pipe 1/2"', zh: '1/2吋銅管' },
+                description: { en: 'Type L, 10 feet length', zh: 'L型，10英尺長' },
+                price: 245.00,
+                category: 'metal',
+                unit: 'length'
+            }
+        ];
+
+        let cart = [];
+        let currentCategory = 'all';
+        let currentLanguage = 'en';
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            const browserLang = navigator.language || 'en';
+            if (browserLang.startsWith('zh')) {
+                setLanguage('zh');
+            } else {
+                setLanguage('en');
+            }
+            renderProducts();
+        });
+
+        function setLanguage(lang) {
+            currentLanguage = lang;
+            updateTranslations();
+            renderProducts();
+        }
+
+        function updateTranslations() {
+            // Update all text elements
+            document.getElementById('categoryTitle').textContent = translations[currentLanguage].categoryTitle;
+            document.getElementById('catAll').textContent = translations[currentLanguage].catAll;
+            document.getElementById('catMetal').textContent = translations[currentLanguage].catMetal;
+            document.getElementById('catDecoration').textContent = translations[currentLanguage].catDecoration;
+            document.getElementById('catTools').textContent = translations[currentLanguage].catTools;
+            document.getElementById('contactText').textContent = translations[currentLanguage].contactText;
+            document.getElementById('loadingText').textContent = translations[currentLanguage].loadingText;
+            document.getElementById('checkoutBtn').textContent = translations[currentLanguage].checkoutBtn;
+        }
+
+        function setCategory(category) {
+            currentCategory = category;
+            // Update active buttons
+            document.querySelectorAll('.category-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            renderProducts();
+        }
+
+        function renderProducts() {
+            const filteredProducts = currentCategory === 'all' 
+                ? products 
+                : products.filter(p => p.category === currentCategory);
+            
+            const container = document.getElementById('productsContainer');
+            
+            if (filteredProducts.length === 0) {
+                container.innerHTML = `<p class="text-center py-5 text-muted">No products in this category</p>`;
+                return;
+            }
+            
+            container.innerHTML = filteredProducts.map(product => `
+                <div class="product-card">
+                    <div class="p-3">
+                        <h6 class="mb-1 chinese-font">${product.name[currentLanguage]}</h6>
+                        <p class="text-muted small mb-2">${product.description[currentLanguage]} • ${product.unit}</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <strong class="price-tag">HK$${product.price.toFixed(2)}</strong>
+                            <button class="btn btn-sm" onclick="addToCart(${product.id})" style="background: var(--sun-orange); color: white; border: none;">
+                                ${translations[currentLanguage].addToCart}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            cart.push({...product, quantity: 1});
+            updateCart();
+            alert(`${product.name[currentLanguage]} ${translations[currentLanguage].addToCart.toLowerCase()}!`);
+        }
+
+        function updateCart() {
+            const cartSummary = document.getElementById('cartSummary');
+            if (cart.length > 0) {
+                cartSummary.style.display = 'block';
+                const total = cart.reduce((sum, item) => sum + item.price, 0);
+                const itemText = cart.length === 1 ? '1 item' : `${cart.length} items`;
+                document.getElementById('cartItemsCount').textContent = itemText;
+                document.getElementById('cartTotal').textContent = `HK$${total.toFixed(2)}`;
+            } else {
+                cartSummary.style.display = 'none';
+            }
+        }
+
+        function checkout() {
+            if (cart.length === 0) {
+                alert('Cart is empty');
+                return;
+            }
+            const total = cart.reduce((sum, item) => sum + item.price, 0);
+            alert(`Order total: HK$${total.toFixed(2)}\n\nPayMe QR code would appear here for payment.\n\nInclude order number: STL${Date.now().toString().slice(-6)}`);
+            cart = [];
+            updateCart();
+        }
+
+        // Show about modal
+        document.querySelector('h4').addEventListener('click', () => {
+            new bootstrap.Modal(document.getElementById('aboutModal')).show();
+        });
+    </script>
+</body>
+</html>

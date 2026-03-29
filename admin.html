@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hardware Shop - Admin</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: #f8f9fa;
+            padding: 20px;
+        }
+        .order-card {
+            transition: transform 0.2s;
+            margin-bottom: 15px;
+        }
+        .order-card:hover {
+            transform: translateY(-2px);
+        }
+        .status-badge {
+            font-size: 0.8em;
+            padding: 4px 8px;
+        }
+        .status-pending {
+            background: #ffc107;
+            color: #000;
+        }
+        .status-paid {
+            background: #28a745;
+            color: #fff;
+        }
+        .status-processing {
+            background: #17a2b8;
+            color: #fff;
+        }
+        .status-delivered {
+            background: #6c757d;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row mb-4">
+            <div class="col">
+                <h1 class="display-5">🛠️ Hardware Shop Admin</h1>
+                <p class="lead">Manage orders and update payment status</p>
+                <div class="alert alert-info">
+                    <strong>PayMe Instructions:</strong> Check your PayMe app for payments. When payment received, mark order as "paid".
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-4">
+            <div class="col-md-3">
+                <div class="card text-white bg-primary">
+                    <div class="card-body">
+                        <h5 class="card-title">Total Orders</h5>
+                        <h2 id="totalOrders" class="card-text">0</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card text-white bg-warning">
+                    <div class="card-body">
+                        <h5 class="card-title">Pending Payment</h5>
+                        <h2 id="pendingOrders" class="card-text">0</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card text-white bg-success">
+                    <div class="card-body">
+                        <h5 class="card-title">Paid</h5>
+                        <h2 id="paidOrders" class="card-text">0</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card text-white bg-info">
+                    <div class="card-body">
+                        <h5 class="card-title">Delivered</h5>
+                        <h2 id="deliveredOrders" class="card-text">0</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">All Orders</h5>
+                        <button class="btn btn-sm btn-primary" onclick="loadOrders()">
+                            <span class="spinner-border spinner-border-sm d-none" id="loadingSpinner"></span>
+                            Refresh
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        <div id="ordersContainer">
+                            <div class="text-center py-5">
+                                <div class="spinner-border text-primary" role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
+                                <p class="mt-3">Loading orders...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:4000/api';
+        
+        async function loadOrders() {
+            const spinner = document.getElementById('loadingSpinner');
+            spinner.classList.remove('d-none');
+            
+            try {
+                const response = await fetch(`${API_BASE}/admin/orders`);
+                const orders = await response.json();
+                
+                updateStats(orders);
+                renderOrders(orders);
+            } catch (error) {
+                console.error('Error loading orders:', error);
+                document.getElementById('ordersContainer').innerHTML = `
+                    <div class="alert alert-danger">
+                        Failed to load orders. Make sure backend is running.
+                    </div>
+                `;
+            } finally {
+                spinner.classList.add('d-none');
+            }
+        }
+        
+        function updateStats(orders) {
+            document.getElementById('totalOrders').textContent = orders.length;
+            document.getElementById('pendingOrders').textContent = 
+                orders.filter(o => o.status === 'pending_payment').length;
+            document.getElementById('paidOrders').textContent = 
+                orders.filter(o => o.status === 'paid').length;
+            document.getElementById('deliveredOrders').textContent = 
+                orders.filter(o => o.status === 'delivered').length;
+        }
+        
+        function renderOrders(orders) {
+            if (orders.length === 0) {
+                document.getElementById('ordersContainer').innerHTML = `
+                    <div class="text-center py-5">
+                        <p class="text-muted">No orders yet.</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            // Sort by newest first
+            orders.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+            
+            const ordersHtml = orders.map(order => `
+                <div class="card order-card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <div>
+                                <h5 class="card-title mb-1">Order ${order.id}</h5>
+                                <p class="text-muted mb-0">
+                                    ${new Date(order.createdAt).toLocaleString()} • 
+                                    ${order.customerName} • ${order.customerPhone}
+                                </p>
+                            </div>
+                            <span class="badge status-badge status-${order.status.replace('_', '-')}">
+                                ${order.status.replace('_', ' ').toUpperCase()}
+                            </span>
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <h6>Items:</h6>
+                                <ul class="list-unstyled">
+                                    ${order.items.map(item => `<li>• ${item.quantity} × Product ${item.productId}</li>`).join('')}
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <h6>Shipping:</h6>
+                                <p class="mb-1">${order.shippingAddress.street}</p>
+                                <p class="mb-1">${order.shippingAddress.district}, ${order.shippingAddress.city}</p>
+                            </div>
+                        </div>
+                        
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <strong>Total: HK$${order.total.toFixed(2)}</strong>
+                                <br>
+                                <small class="text-muted">PayMe reference: Order ${order.id}</small>
+                            </div>
+                            <div>
+                                ${order.status === 'pending_payment' ? `
+                                    <button class="btn btn-success btn-sm" onclick="updateStatus('${order.id}', 'paid')">
+                                        Mark as Paid
+                                    </button>
+                                ` : order.status === 'paid' ? `
+                                    <button class="btn btn-info btn-sm" onclick="updateStatus('${order.id}', 'processing')">
+                                        Start Processing
+                                    </button>
+                                ` : order.status === 'processing' ? `
+                                    <button class="btn btn-secondary btn-sm" onclick="updateStatus('${order.id}', 'delivered')">
+                                        Mark as Delivered
+                                    </button>
+                                ` : ''}
+                                <button class="btn btn-outline-primary btn-sm ms-2" onclick="viewOrder('${order.id}')">
+                                    View Details
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+            
+            document.getElementById('ordersContainer').innerHTML = ordersHtml;
+        }
+        
+        async function updateStatus(orderId, newStatus) {
+            if (!confirm(`Change order ${orderId} to ${newStatus}?`)) return;
+            
+            try {
+                const response = await fetch(`${API_BASE}/admin/orders/${orderId}/status`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ status: newStatus })
+                });
+                
+                if (response.ok) {
+                    alert('Order status updated!');
+                    loadOrders();
+                } else {
+                    alert('Failed to update status');
+                }
+            } catch (error) {
+                console.error('Error updating status:', error);
+                alert('Error updating status');
+            }
+        }
+        
+        function viewOrder(orderId) {
+            window.open(`${API_BASE}/orders/${orderId}`, '_blank');
+        }
+        
+        // Load orders on page load
+        document.addEventListener('DOMContentLoaded', loadOrders);
+        
+        // Auto-refresh every 30 seconds
+        setInterval(loadOrders, 30000);
+    </script>
+</body>
+</html>

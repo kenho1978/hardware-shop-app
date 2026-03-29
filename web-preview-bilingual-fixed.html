@@ -1,0 +1,196 @@
+            document.getElementById('orderNumberText').textContent = translations[currentLanguage].orderNumber + ':';
+            document.getElementById('cancelPayBtn').textContent = translations[currentLanguage].cancel;
+            document.getElementById('paidBtn').textContent = translations[currentLanguage].ivePaid;
+            
+            // Update category buttons
+            document.querySelectorAll('.category-btn').forEach((btn, index) => {
+                const texts = btn.querySelector('.bilingual-text');
+                if (texts) {
+                    const enText = texts.querySelector('.en-text');
+                    const zhText = texts.querySelector('.chinese-text');
+                    if (currentLanguage === 'en') {
+                        enText.style.display = 'block';
+                        zhText.style.display = 'none';
+                    } else {
+                        enText.style.display = 'none';
+                        zhText.style.display = 'block';
+                    }
+                }
+            });
+        }
+
+        function setCategory(category) {
+            currentCategory = category;
+            // Update active button
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            renderProducts();
+        }
+
+        function renderProducts() {
+            const filteredProducts = currentCategory === 'all' 
+                ? products 
+                : products.filter(p => p.category === currentCategory);
+            
+            const container = document.getElementById('productsContainer');
+            container.innerHTML = `
+                <div class="row">
+                    ${filteredProducts.map(product => `
+                        <div class="col-6 mb-3">
+                            <div class="product-card">
+                                <div class="product-image" style="display: flex; align-items: center; justify-content: center; font-size: 60px;">
+                                    ${product.image}
+                                </div>
+                                <div class="p-3">
+                                    <h6 class="mb-1">${product.name[currentLanguage]}</h6>
+                                    <p class="text-muted small mb-2">${product.description[currentLanguage]}</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <strong class="text-primary">HK$${product.price.toFixed(2)}</strong>
+                                        <button class="btn btn-sm btn-primary" onclick="addToCart(${product.id})">
+                                            ${translations[currentLanguage].addToCart}
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            const existingItem = cart.find(item => item.id === productId);
+            
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({
+                    ...product,
+                    quantity: 1
+                });
+            }
+            
+            updateCart();
+            alert(`${product.name[currentLanguage]} ${translations[currentLanguage].addToCart.toLowerCase()}!`);
+        }
+
+        function updateCart() {
+            // Update cart count
+            document.getElementById('cartCount').textContent = cart.length;
+            
+            // Update cart summary
+            const cartSummary = document.getElementById('cartSummary');
+            
+            if (cart.length > 0) {
+                cartSummary.style.display = 'block';
+                
+                const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+                const itemText = cart.length === 1 
+                    ? translations[currentLanguage].itemInCart.replace('{{count}}', cart.length)
+                    : translations[currentLanguage].itemsInCart.replace('{{count}}', cart.length);
+                
+                document.getElementById('cartItemsCount').textContent = itemText;
+                document.getElementById('cartTotal').textContent = `HK$${total.toFixed(2)}`;
+                
+                // Update cart modal if open
+                updateCartModal();
+            } else {
+                cartSummary.style.display = 'none';
+            }
+        }
+
+        function updateCartModal() {
+            const container = document.getElementById('cartItems');
+            if (cart.length === 0) {
+                container.innerHTML = `<p class="text-center text-muted">${translations[currentLanguage].cartEmpty}</p>`;
+                return;
+            }
+            
+            container.innerHTML = cart.map(item => `
+                <div class="cart-item">
+                    <div>
+                        <h6 class="mb-1">${item.name[currentLanguage]}</h6>
+                        <p class="text-muted small mb-0">HK$${item.price.toFixed(2)} ${translations[currentLanguage].quantity.toLowerCase()}</p>
+                    </div>
+                    <div class="quantity-controls">
+                        <button class="quantity-btn" onclick="updateQuantity(${item.id}, ${item.quantity - 1})">-</button>
+                        <span>${item.quantity}</span>
+                        <button class="quantity-btn" onclick="updateQuantity(${item.id}, ${item.quantity + 1})">+</button>
+                        <button class="remove-btn" onclick="removeFromCart(${item.id})">
+                            ${translations[currentLanguage].remove}
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function updateQuantity(productId, newQuantity) {
+            if (newQuantity < 1) {
+                removeFromCart(productId);
+                return;
+            }
+            
+            const item = cart.find(item => item.id === productId);
+            if (item) {
+                item.quantity = newQuantity;
+                updateCart();
+            }
+        }
+
+        function removeFromCart(productId) {
+            cart = cart.filter(item => item.id !== productId);
+            updateCart();
+        }
+
+        function checkout() {
+            if (cart.length === 0) {
+                alert(translations[currentLanguage].cartEmpty);
+                return;
+            }
+            
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const orderNumber = 'ORD' + Date.now().toString().slice(-6);
+            
+            document.getElementById('orderTotal').textContent = `HK$${total.toFixed(2)}`;
+            document.getElementById('orderNumber').textContent = orderNumber;
+            
+            // Update PayMe instructions
+            const instructions = document.getElementById('paymeInstructions');
+            instructions.innerHTML = `
+                <p><i class="bi bi-1-circle"></i> ${translations[currentLanguage].instruction1}</p>
+                <p><i class="bi bi-2-circle"></i> ${translations[currentLanguage].instruction2}</p>
+                <p><i class="bi bi-3-circle"></i> ${translations[currentLanguage].instruction3}</p>
+                <p><i class="bi bi-4-circle"></i> ${translations[currentLanguage].instruction4.replace('{{amount}}', `HK$${total.toFixed(2)}`)}</p>
+                <p><i class="bi bi-5-circle"></i> ${translations[currentLanguage].instruction5.replace('{{orderNumber}}', orderNumber)}</p>
+                <p><i class="bi bi-6-circle"></i> ${translations[currentLanguage].instruction6}</p>
+            `;
+            
+            // Show PayMe modal
+            const modal = new bootstrap.Modal(document.getElementById('paymeModal'));
+            modal.show();
+            
+            // Hide cart modal if open
+            const cartModal = bootstrap.Modal.getInstance(document.getElementById('cartModal'));
+            if (cartModal) cartModal.hide();
+        }
+
+        function markAsPaid() {
+            alert(`${translations[currentLanguage].orderConfirmed}\n${translations[currentLanguage].thankYouOrder}`);
+            cart = [];
+            updateCart();
+            
+            const modal = bootstrap.Modal.getInstance(document.getElementById('paymeModal'));
+            if (modal) modal.hide();
+        }
+
+        // View cart
+        document.querySelector('.cart-badge').addEventListener('click', () => {
+            const modal = new bootstrap.Modal(document.getElementById('cartModal'));
+            modal.show();
+        });
+    </script>
+</body>
+</html>

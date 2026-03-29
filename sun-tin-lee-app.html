@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>新天利裝飾材料 | Sun Tin Lee Decoration & Metal</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { max-width: 400px; margin: 0 auto; background: #f8f9fa; font-family: 'Helvetica Neue', Arial, 'PingFang SC', sans-serif; }
+        .header { background: linear-gradient(135deg, #1a3a8f 0%, #2d5aa0 100%); color: white; padding: 20px; }
+        .company-badge { background: rgba(255,255,255,0.2); padding: 5px 10px; border-radius: 4px; font-size: 0.8em; }
+        .product-card { border: 1px solid #e0e0e0; border-radius: 12px; margin: 15px; background: white; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+        .category-btn { border: 2px solid #1a3a8f; color: #1a3a8f; background: white; border-radius: 20px; padding: 8px 20px; margin: 5px; }
+        .category-btn.active { background: #1a3a8f; color: white; }
+        .contact-bar { background: #2d5aa0; color: white; padding: 10px; text-align: center; font-size: 0.9em; }
+        .chinese-font { font-family: 'Microsoft JhengHei', 'PingFang SC', sans-serif; }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="d-flex justify-content-between align-items-center">
+            <div>
+                <h4 class="mb-1 chinese-font">新天利裝飾材料</h4>
+                <p class="mb-0" style="font-size: 0.9em; opacity: 0.9;">Sun Tin Lee Decoration & Metal Materials</p>
+                <div class="company-badge mt-2">Est. 1992 • Kwun Tong, HK</div>
+            </div>
+            <div>
+                <button class="btn btn-sm btn-light" onclick="setLang('en')">EN</button>
+                <button class="btn btn-sm btn-light" onclick="setLang('zh')">中文</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Bar -->
+    <div class="contact-bar">
+        <span id="contactText">Call: +852 2507 4944 | Wan Chai, Hong Kong</span>
+    </div>
+
+    <!-- Categories -->
+    <div class="p-3 bg-white">
+        <h6 class="mb-3 chinese-font" id="categoryTitle">產品分類</h6>
+        <div class="d-flex flex-wrap">
+            <button class="category-btn active" onclick="setCategory('all')" id="catAll">All / 全部</button>
+            <button class="category-btn" onclick="setCategory('metal')" id="catMetal">Metal / 金屬材料</button>
+            <button class="category-btn" onclick="setCategory('decoration')" id="catDecoration">Decoration / 裝飾材料</button>
+            <button class="category-btn" onclick="setCategory('tools')" id="catTools">Tools / 工具</button>
+        </div>
+    </div>
+
+    <!-- Products -->
+    <div class="p-3" id="productsContainer">
+        <div class="text-center py-4">
+            <div class="spinner-border text-primary" role="status"></div>
+            <p class="mt-2" id="loadingText">Loading products...</p>
+        </div>
+    </div>
+
+    <!-- Cart Summary -->
+    <div class="cart-summary" id="cartSummary" style="display: none; position: fixed; bottom: 0; left: 0; right: 0; background: white; padding: 15px; border-top: 2px solid #1a3a8f; box-shadow: 0 -2px 10px rgba(0,0,0,0.1);">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <span id="cartItemsCount">0 items</span>
+            <strong id="cartTotal">HK$0.00</strong>
+        </div>
+        <button class="btn btn-success w-100" onclick="checkout()" id="checkoutBtn" style="background: #28a745; border: none; padding: 12px; border-radius: 8px; font-weight: bold;">
+            Checkout with PayMe
+        </button>
+    </div>
+
+    <!-- About Modal -->
+    <div class="modal fade" id="aboutModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title chinese-font">關於新天利</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p><strong>新天利裝飾材料有限公司</strong></p>
+                    <p>Sun Tin Lee Decoration & Metal Materials Limited</p>
+                    <p>Established: 1992</p>
+                    <p>Location: Lockhart Road, Wan Chai, Hong Kong</p>
+                    <p>Phone: +852 2507 4944</p>
+                    <p class="mt-3">Specializing in metal materials and decoration supplies for contractors, builders, and DIY projects.</p>
+                    <p>33 years of trusted service in Hong Kong.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Bilingual content for Sun Tin Lee
+        const translations = {
+            en: {
+                categoryTitle: 'Product Categories',
+                catAll: 'All',
+                catMetal: 'Metal Materials',
+                catDecoration: 'Decoration Supplies',
+                catTools: 'Tools',
+                contactText: 'Call: +852 2507 4944 | Lockhart Road, Wan Chai',
+                loadingText: 'Loading products...',
+                addToCart: 'Add to Cart',
+                checkoutBtn: 'Checkout with PayMe',
+                aboutTitle: 'About Sun Tin Lee',
+                companyDesc: '33 years of trusted service in Hong Kong'
+            },
+            zh: {
+                categoryTitle: '產品分類',
+                catAll: '全部',
+                catMetal: '金屬材料',
+                catDecoration: '裝飾材料',
+                catTools: '工具',
+                contactText: '電話: +852 2507 4944 | 灣仔駱克道',
+                loadingText: '載入產品中...',
+                addToCart: '加入購物車',
+                checkoutBtn: '使用PayMe結帳',
+                aboutTitle: '關於新天利',
+                companyDesc: '33年香港信譽服務'
+            }
+        };
+
+        // Sample products for Sun Tin Lee
+        const products = [
+            {
+                id: 1,
+                name: { en: 'Stainless Steel Sheet 304', zh: '304不鏽鋼板' },
+                description: { en: '2mm thickness, 4x8 feet', zh: '2毫米厚度，4x8英尺' },
+                price: 1280.00,
+                category: 'metal',
+                unit: 'sheet'
+            },
+            {
+                id: 2,
+                name: { en: 'Aluminum Angle Bar', zh: '鋁角鐵' },
+                description: { en: '1" x 1" x 1/8", 6 feet length', zh: '1吋 x 1吋 x 1/8吋，6英尺長' },
+                price: 85.50,
+                category: 'metal',
+                unit: 'piece'
+            },
+            {
+                id: 3,
+                name: { en: 'Decorative Wall Panel', zh: '裝飾牆板' },
+                description: { en: 'Wood grain PVC, 4x8 feet', zh: '木紋PVC，4x8英尺' },
+                price: 320.00,
+                category: 'decoration',
+                unit: 'panel'
+            },
+            {
+                id: 4,
+                name: { en: 'Paint Roller Set', zh: '油漆滾筒套裝' },
+                description: { en: 'Professional 9-piece set', zh: '專業9件套裝' },
+                price: 189.90,
+                category: 'tools',
+                unit: 'set'
+            },
+            {
+                id: 5,
+                name: { en: 'Copper Pipe 1/2"', zh: '1/2吋銅管' },
+                description: { en: 'Type L, 10 feet length', zh: 'L型，10英尺長' },
+                price: 245.00,
+                category: 'metal',
+                unit: 'length'
+            }
+        ];
+
+        let cart = [];
+        let currentCategory = 'all';
+        let currentLanguage = 'en';
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            const browserLang = navigator.language || 'en';
+            if (browserLang.startsWith('zh')) {
+                setLanguage('zh');
+            } else {
+                setLanguage('en');
+            }
+            renderProducts();
+        });
+
+        function setLanguage(lang) {
+            currentLanguage = lang;
+            updateTranslations();
+            renderProducts();
+        }
+
+        function updateTranslations() {
+            // Update all text elements
+            document.getElementById('categoryTitle').textContent = translations[currentLanguage].categoryTitle;
+            document.getElementById('catAll').textContent = translations[currentLanguage].catAll;
+            document.getElementById('catMetal').textContent = translations[currentLanguage].catMetal;
+            document.getElementById('catDecoration').textContent = translations[currentLanguage].catDecoration;
+            document.getElementById('catTools').textContent = translations[currentLanguage].catTools;
+            document.getElementById('contactText').textContent = translations[currentLanguage].contactText;
+            document.getElementById('loadingText').textContent = translations[currentLanguage].loadingText;
+            document.getElementById('checkoutBtn').textContent = translations[currentLanguage].checkoutBtn;
+        }
+
+        function setCategory(category) {
+            currentCategory = category;
+            // Update active buttons
+            document.querySelectorAll('.category-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            renderProducts();
+        }
+
+        function renderProducts() {
+            const filteredProducts = currentCategory === 'all' 
+                ? products 
+                : products.filter(p => p.category === currentCategory);
+            
+            const container = document.getElementById('productsContainer');
+            
+            if (filteredProducts.length === 0) {
+                container.innerHTML = `<p class="text-center py-5 text-muted">No products in this category</p>`;
+                return;
+            }
+            
+            container.innerHTML = filteredProducts.map(product => `
+                <div class="product-card">
+                    <div class="p-3">
+                        <h6 class="mb-1 chinese-font">${product.name[currentLanguage]}</h6>
+                        <p class="text-muted small mb-2">${product.description[currentLanguage]} • ${product.unit}</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <strong class="text-primary">HK$${product.price.toFixed(2)}</strong>
+                            <button class="btn btn-sm btn-primary" onclick="addToCart(${product.id})">
+                                ${translations[currentLanguage].addToCart}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            cart.push({...product, quantity: 1});
+            updateCart();
+            alert(`${product.name[currentLanguage]} ${translations[currentLanguage].addToCart.toLowerCase()}!`);
+        }
+
+        function updateCart() {
+            const cartSummary = document.getElementById('cartSummary');
+            if (cart.length > 0) {
+                cartSummary.style.display = 'block';
+                const total = cart.reduce((sum, item) => sum + item.price, 0);
+                const itemText = cart.length === 1 ? '1 item' : `${cart.length} items`;
+                document.getElementById('cartItemsCount').textContent = itemText;
+                document.getElementById('cartTotal').textContent = `HK$${total.toFixed(2)}`;
+            } else {
+                cartSummary.style.display = 'none';
+            }
+        }
+
+        function checkout() {
+            if (cart.length === 0) {
+                alert('Cart is empty');
+                return;
+            }
+            const total = cart.reduce((sum, item) => sum + item.price, 0);
+            alert(`Order total: HK$${total.toFixed(2)}\n\nPayMe QR code would appear here for payment.\n\nInclude order number: STL${Date.now().toString().slice(-6)}`);
+            cart = [];
+            updateCart();
+        }
+
+        // Show about modal
+        document.querySelector('h4').addEventListener('click', () => {
+            new bootstrap.Modal(document.getElementById('aboutModal')).show();
+        });
+    </script>
+</body>
+</html>

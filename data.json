@@ -1,0 +1,42 @@
+{
+  "products": [
+    {
+      "id": "PRD744428",
+      "name": "Mochie",
+      "description": "Cat",
+      "price": 100,
+      "category": "Plumbing",
+      "stock": 0,
+      "image": "https://via.placeholder.com/300x200?text=Mochie",
+      "rating": 4.5,
+      "createdAt": "2026-03-27T04:12:24.428Z"
+    }
+  ],
+  "orders": [],
+  "categories": [
+    {
+      "id": "metal",
+      "name": "Metal",
+      "icon": "🔩",
+      "count": 0
+    },
+    {
+      "id": "decoration",
+      "name": "Decoration",
+      "icon": "🎨",
+      "count": 0
+    },
+    {
+      "id": "tools",
+      "name": "Tools",
+      "icon": "🛠️",
+      "count": 0
+    },
+    {
+      "id": "general",
+      "name": "General",
+      "icon": "📦",
+      "count": 0
+    }
+  ]
+}

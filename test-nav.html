@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Nav</title>
+    <style>
+        .nav-btn { padding: 10px 20px; margin: 5px; cursor: pointer; border: 1px solid #ccc; }
+        .nav-btn.active { background: red; color: white; }
+        .section { display: none; padding: 20px; background: #f0f0f0; margin: 10px; }
+        .section.active { display: block; }
+    </style>
+</head>
+<body>
+    <button class="nav-btn active" onclick="showSection('orders', this)">Orders</button>
+    <button class="nav-btn" onclick="showSection('products', this)">Products</button>
+    <button class="nav-btn" onclick="showSection('settings', this)">Settings</button>
+
+    <div class="section" id="ordersSection">
+        <h2>Orders Section</h2>
+        <p>This is the orders section</p>
+    </div>
+
+    <div class="section" id="productsSection">
+        <h2>Products Section</h2>
+        <p>This is the products section</p>
+        <button onclick="alert('Products clicked!')">Test Alert</button>
+    </div>
+
+    <div class="section" id="settingsSection">
+        <h2>Settings Section</h2>
+        <p>This is the settings section</p>
+    </div>
+
+    <script>
+        function showSection(section, btn) {
+            console.log('showSection called:', section);
+            
+            // Hide all sections
+            var sections = document.querySelectorAll('.section');
+            for (var i = 0; i < sections.length; i++) {
+                sections[i].style.display = 'none';
+            }
+            
+            // Remove active from all buttons
+            var buttons = document.querySelectorAll('.nav-btn');
+            for (var i = 0; i < buttons.length; i++) {
+                buttons[i].classList.remove('active');
+            }
+            
+            // Show target section
+            var targetSection = document.getElementById(section + 'Section');
+            if (targetSection) {
+                targetSection.style.display = 'block';
+                console.log('Showing:', section + 'Section');
+            } else {
+                console.log('Section not found:', section + 'Section');
+            }
+            
+            // Add active to clicked button
+            if (btn) {
+                btn.classList.add('active');
+            }
+        }
+    </script>
+</body>
+</html>

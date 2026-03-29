@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>新天利裝飾材料有限公司 | Sun Tin Lee</title>
+    <style>
+        /* Business Card Exact Colors */
+        :root {
+            --bg-cream: #F3EDE6;
+            --bg-clean: #FAF8F5;
+            --text-navy: #222D3E;
+            --accent-red: #C8483F;
+            --logo-grey: #81766D;
+            --white: #FFFFFF;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Microsoft JhengHei', 'PingFang SC', sans-serif;
+            background: var(--bg-cream);
+            color: var(--text-navy);
+            max-width: 400px;
+            margin: 0 auto;
+            min-height: 100vh;
+            padding-bottom: 80px;
+        }
+        
+        /* Header - Matches Business Card */
+        .header {
+            background: var(--accent-red);
+            color: var(--white);
+            padding: 16px 20px;
+        }
+        
+        .header-content {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .company-info {
+            flex: 1;
+        }
+        
+        .company-name {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 2px;
+            font-family: 'Microsoft JhengHei', 'PingFang SC', sans-serif;
+        }
+        
+        .company-name-en {
+            font-size: 11px;
+            opacity: 0.9;
+            font-weight: 400;
+        }
+        
+        /* Business Info Section */
+        .business-info {
+            background: var(--bg-clean);
+            margin: 16px;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid rgba(34, 45, 62, 0.1);
+        }
+        
+        .info-row {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 12px;
+        }
+        
+        .info-row:last-child {
+            margin-bottom: 0;
+        }
+        
+        .info-icon {
+            width: 20px;
+            height: 20px;
+            background: var(--accent-red);
+            color: var(--white);
+            border-radius: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            margin-right: 12px;
+            flex-shrink: 0;
+        }
+        
+        .info-content {
+            flex: 1;
+        }
+        
+        .info-label {
+            font-size: 11px;
+            color: var(--logo-grey);
+            margin-bottom: 2px;
+        }
+        
+        .info-value {
+            font-size: 14px;
+            color: var(--text-navy);
+            font-weight: 500;
+        }
+        
+        /* Language Switcher */
+        .language-switcher {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin: 0 16px 16px 16px;
+        }
+        
+        .lang-btn {
+            background: var(--white);
+            border: 2px solid var(--text-navy);
+            color: var(--text-navy);
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .lang-btn.active {
+            background: var(--text-navy);
+            color: var(--white);
+        }
+        
+        /* Categories */
+        .categories {
+            padding: 0 16px;
+            margin-bottom: 20px;
+        }
+        
+        .section-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-navy);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .section-title::before {
+            content: "";
+            width: 4px;
+            height: 16px;
+            background: var(--accent-red);
+            border-radius: 2px;
+        }
+        
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+        
+        .category-card {
+            background: var(--white);
+            border: 1px solid rgba(34, 45, 62, 0.1);
+            border-radius: 8px;
+            padding: 14px 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .category-card:hover {
+            border-color: var(--accent-red);
+        }
+        
+        .category-card.active {
+            background: var(--accent-red);
+            color: var(--white);
+            border-color: var(--accent-red);
+        }
+        
+        .category-icon {
+            font-size: 22px;
+            margin-bottom: 6px;
+        }
+        
+        .category-name {
+            font-size: 11px;
+            font-weight: 600;
+        }
+        
+        /* Products */
+        .products {
+            padding: 0 16px;
+        }
+        
+        .product-card {
+            background: var(--white);
+            border: 1px solid rgba(34, 45, 62, 0.1);
+            border-radius: 10px;
+            padding: 16px;
+            margin-bottom: 12px;
+            transition: all 0.2s;
+        }
+        
+        .product-card:hover {
+            border-color: var(--accent-red);
+            box-shadow: 0 2px 8px rgba(200, 72, 63, 0.1);
+        }
+        
+        .product-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 8px;
+        }
+        
+        .product-name {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text-navy);
+            flex: 1;
+        }
+        
+        .product-price {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--accent-red);
+        }
+        
+        .product-desc {
+            font-size: 13px;
+            color: var(--logo-grey);
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+        
+        .product-footer {
+            display: flex;
+            justify-content: flex-end;
+        }
+        
+        .add-to-cart {
+            background: var(--text-navy);
+            color: var(--white);
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        
+        .add-to-cart:hover {
+            background: var(--accent-red);
+        }
+        
+        /* Cart Summary */
+        .cart-summary {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 400px;
+            background: var(--text-navy);
+            color: var(--white);
+            padding: 14px 16px;
+            display: none;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.15);
+        }
+        
+        .cart-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .cart-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .cart-count {
+            background: var(--accent-red);
+            color: var(--white);
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 700;
+        }
+        
+        .cart-total {
+            font-size: 18px;
+            font-weight: 700;
+        }
+        
+        .checkout-btn {
+            background: var(--accent-red);
+            color: var(--white);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="header-content">
+            <div class="logo-icon">
+                <img src="Logo.jpg" style="width: 44px; height: 44px; border-radius: 4px; object-fit: contain;" onerror="this.style.display='none'">
+            </div>
+            <div class="company-info">
+                <div class="company-name">新天利裝飾材料有限公司</div>
+                <div class="company-name-en">SUN TIN LEE DECORATION AND METAL MATERIALS LIMITED</div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Business Info -->
+    <div class="business-info">
+        <div class="info-row">
+            <div class="info-icon">📍</div>
+            <div class="info-content">
+                <div class="info-label" id="addressLabel">ADDRESS</div>
+                <div class="info-value" id="addressValue">248 Lockhart Road, Wan Chai, Hong Kong</div>
+            </div>
+        </div>
+        <div class="info-row">
+            <div class="info-icon">📞</div>
+            <div class="info-content">
+                <div class="info-label" id="telLabel">TEL</div>
+                <div class="info-value" id="telValue">(852) 2507 4944</div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Language Switcher -->
+    <div class="language-switcher">
+        <button class="lang-btn active" data-lang="en">ENGLISH</button>
+        <button class="lang-btn" data-lang="zh">中文</button>
+    </div>
+    
+    <!-- Categories -->
+    <div class="categories">
+        <div class="section-title">PRODUCT CATEGORIES</div>
+        <div class="category-grid">
+            <div class="category-card active" data-category="all" onclick="setCategory('all', this)">
+                <div class="category-icon">🛒</div>
+                <div class="category-name" id="catAll">ALL</div>
+            </div>
+            <div class="category-card" data-category="metal" onclick="setCategory('metal', this)">
+                <div class="category-icon">🔩</div>
+                <div class="category-name" id="catMetal">METAL</div>
+            </div>
+            <div class="category-card" data-category="decoration" onclick="setCategory('decoration', this)">
+                <div class="category-icon">🎨</div>
+                <div class="category-name" id="catDecoration">DECO</div>
+            </div>
+            <div class="category-card" data-category="tools" onclick="setCategory('tools', this)">
+                <div class="category-icon">🛠️</div>
+                <div class="category-name" id="catTools">TOOLS</div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Products -->
+    <div class="products">
+        <div class="section-title">PRODUCTS</div>
+        
+        <div class="product-card" data-id="1">
+            <div class="product-header">
+                <div class="product-name">Stainless Steel Sheet 304</div>
+                <div class="product-price">$1,280</div>
+            </div>
+            <div class="product-desc">2mm thickness, 4x8 feet sheet. Professional grade for construction and decoration.</div>
+            <div class="product-footer">
+                <button class="add-to-cart">ADD TO CART</button>
+            </div>
+        </div>
+        
+        <div class="product-card" data-id="2">
+            <div class="product-header">
+                <div class="product-name">Aluminum Angle Bar</div>
+                <div class="product-price">$85.50</div>
+            </div>
+            <div class="product-desc">1" x 1" x 1/8", 6 feet length. Perfect for structural framing and supports.</div>
+            <div class="product-footer">
+                <button class="add-to-cart">ADD TO CART</button>
+            </div>
+        </div>
+        
+        <div class="product-card" data-id="3">
+            <div class="product-header">
+                <div class="product-name">Decorative Wall Panel</div>
+                <div class="product-price">$320</div>
+            </div>
+            <div class="product-desc">Wood grain PVC, 4x8 feet. Easy installation, waterproof, perfect for interiors.</div>
+            <div class="product-footer">
+                <button class="add-to-cart">ADD TO CART</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Cart Summary -->
+    <div class="cart-summary" id="cartSummary">
+        <div class="cart-content">
+            <div class="cart-info">
+                <div class="cart-count" id="cartCount">0</div>
+                <div class="cart-total" id="cartTotal">HK$0.00</div>
+            </div>
+            <button class="checkout-btn" id="checkoutBtn">CHECKOUT</button>
+        </div>
+    </div>
+    
+    <script>
+        // Products data
+        const products = [
+            { id: 1, name: 'Stainless Steel Sheet 304', price: 1280.00 },
+            { id: 2, name: 'Aluminum Angle Bar', price: 85.50 },
+            { id: 3, name: 'Decorative Wall Panel', price: 320.00 }
+        ];
+        
+        // Translations
+        const translations = {
+            en: {
+                companyInfo: 'COMPANY INFORMATION',
+                address: 'ADDRESS',
+                addressValue: '248 Lockhart Road, Wan Chai, Hong Kong',
+                tel: 'TEL',
+                telValue: '(852) 2507 4944',
+                categories: 'PRODUCT CATEGORIES',
+                all: '全部 ALL',
+                metal: '金屬 METAL',
+                decoration: '裝飾 DECO',
+                tools: '工具 TOOLS',
+                products: 'PRODUCTS',
+                addToCart: 'ADD TO CART',
+                added: 'ADDED!',
+                checkout: 'CHECKOUT',
+                total: 'TOTAL',
+                items: 'ITEMS'
+            },
+            zh: {
+                companyInfo: '公司資料',
+                address: '地址',
+                addressValue: '香港灣仔駱克道248號',
+                tel: '電話',
+                telValue: '(852) 2507 4944',
+                categories: '產品分類',
+                all: '全部',
+                metal: '金屬材料',
+                decoration: '裝飾材料',
+                tools: '工具',
+                products: '產品',
+                addToCart: '加入購物車',
+                added: '已加入！',
+                checkout: '結帳',
+                total: '總計',
+                items: '件商品'
+            }
+        };
+        
+        let cart = [];
+        let currentLang = 'en';
+        
+        // Language switcher
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                currentLang = this.dataset.lang;
+                updateLanguage();
+            });
+        });
+        
+        // Category selection
+        document.querySelectorAll('.category-card').forEach(card => {
+            card.addEventListener('click', function() {
+                document.querySelectorAll('.category-card').forEach(c => c.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+        
+        // Add to cart
+        document.querySelectorAll('.add-to-cart').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const card = this.closest('.product-card');
+                const id = parseInt(card.dataset.id);
+                const product = products.find(p => p.id === id);
+                cart.push(product);
+                updateCart();
+                this.textContent = currentLang === 'en' ? 'ADDED!' : '已加入!';
+                setTimeout(() => {
+                    this.textContent = translations[currentLang].addToCart;
+                }, 1000);
+            });
+        });
+        
+        function updateCart() {
+            const summary = document.getElementById('cartSummary');
+            if (cart.length > 0) {
+                summary.style.display = 'block';
+                const total = cart.reduce((sum, p) => sum + p.price, 0);
+                document.getElementById('cartCount').textContent = cart.length;
+                document.getElementById('cartTotal').textContent = `HK$${total.toFixed(2)}`;
+            } else {
+                summary.style.display = 'none';
+            }
+        }
+        
+        function updateLanguage() {
+            const t = translations[currentLang];
+            document.querySelectorAll('.section-title')[0].textContent = t.categories;
+            document.querySelectorAll('.section-title')[1].textContent = t.products;
+            document.getElementById('checkoutBtn').textContent = t.checkout;
+            document.querySelectorAll('.add-to-cart').forEach(btn => {
+                if (btn.textContent === 'ADDED!' || btn.textContent === '已加入!') return;
+                btn.textContent = t.addToCart;
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Test</title>
+    <style>
+        :root {
+            --bg-cream: #F3EDE6;
+            --bg-clean: #FAF8F5;
+            --text-navy: #222D3E;
+            --accent-red: #C8483F;
+            --logo-grey: #81766D;
+            --white: #FFFFFF;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-cream);
+            margin: 0;
+            padding: 0;
+        }
+        
+        .header {
+            background: var(--text-navy);
+            color: var(--white);
+            padding: 16px 20px;
+        }
+        
+        .nav {
+            background: var(--white);
+            padding: 12px 20px;
+            display: flex;
+            gap: 8px;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+        }
+        
+        .nav-btn {
+            padding: 10px 20px;
+            border: none;
+            background: transparent;
+            color: var(--text-navy);
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 6px;
+        }
+        
+        .nav-btn.active {
+            background: var(--accent-red);
+            color: var(--white);
+        }
+        
+        .section {
+            padding: 20px;
+            display: none;
+        }
+        
+        .section.active {
+            display: block;
+        }
+        
+        .product-form {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 12px;
+        }
+        
+        .form-group label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 4px;
+            color: var(--logo-grey);
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        
+        .btn-primary {
+            background: var(--accent-red);
+            color: white;
+        }
+        
+        .btn-secondary {
+            background: var(--text-navy);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h2>新天利管理後台 ADMIN</h2>
+    </div>
+    
+    <div class="nav">
+        <button class="nav-btn active" onclick="showSection('orders', this)">📦 ORDERS</button>
+        <button class="nav-btn" onclick="showSection('products', this)">🏷️ PRODUCTS</button>
+        <button class="nav-btn" onclick="showSection('settings', this)">⚙️ SETTINGS</button>
+    </div>
+    
+    <div id="ordersSection" class="section active">
+        <h3>Orders</h3>
+        <p>Order list will appear here</p>
+    </div>
+    
+    <div id="productsSection" class="section">
+        <h3>Products</h3>
+        <p>Product list will appear here</p>
+        
+        <div class="product-form">
+            <h4>➕ Add New Product</h4>
+            <form onsubmit="handleAddProduct(event)">
+                <div class="form-group">
+                    <label>Product Name *</label>
+                    <input type="text" id="productName" required placeholder="e.g. 不鏽鋼板 304">
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <input type="text" id="productDesc" placeholder="e.g. 2毫米厚度">
+                </div>
+                <div class="form-group">
+                    <label>Price (HK$) *</label>
+                    <input type="number" id="productPrice" required step="0.01" placeholder="1280.00">
+                </div>
+                <div class="form-group">
+                    <label>Category</label>
+                    <input type="text" id="productCategory" placeholder="Metal">
+                </div>
+                <div class="form-group">
+                    <label>Product Image</label>
+                    <input type="file" id="productImage" accept="image/*" onchange="previewImage(this)">
+                    <img id="imagePreview" style="display: none; max-width: 200px; margin-top: 10px; border-radius: 8px;">
+                </div>
+                <button type="submit" class="btn btn-primary">✅ SAVE PRODUCT</button>
+            </form>
+        </div>
+    </div>
+    
+    <div id="settingsSection" class="section">
+        <h3>Settings</h3>
+        <p>Store settings here</p>
+    </div>
+    
+    <script>
+        function showSection(section, btn) {
+            console.log('showSection called:', section);
+            
+            // Hide all sections
+            var sections = document.querySelectorAll('.section');
+            for (var i = 0; i < sections.length; i++) {
+                sections[i].classList.remove('active');
+            }
+            
+            // Remove active from all buttons
+            var buttons = document.querySelectorAll('.nav-btn');
+            for (var i = 0; i < buttons.length; i++) {
+                buttons[i].classList.remove('active');
+            }
+            
+            // Show target section
+            var targetSection = document.getElementById(section + 'Section');
+            if (targetSection) {
+                targetSection.classList.add('active');
+                console.log('Showing:', section + 'Section');
+            }
+            
+            // Add active to clicked button
+            if (btn) {
+                btn.classList.add('active');
+            }
+        }
+        
+        function previewImage(input) {
+            var preview = document.getElementById('imagePreview');
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+        
+        function handleAddProduct(event) {
+            event.preventDefault();
+            
+            var formData = {
+                name: document.getElementById('productName').value,
+                description: document.getElementById('productDesc').value,
+                price: parseFloat(document.getElementById('productPrice').value),
+                category: document.getElementById('productCategory').value || 'General',
+                image: ''
+            };
+            
+            // If image selected, convert to base64
+            var imageInput = document.getElementById('productImage');
+            if (imageInput.files && imageInput.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    formData.image = e.target.result;
+                    saveProduct(formData);
+                }
+                reader.readAsDataURL(imageInput.files[0]);
+            } else {
+                formData.image = 'https://via.placeholder.com/200x200?text=No+Image';
+                saveProduct(formData);
+            }
+        }
+        
+        function saveProduct(product) {
+            alert('Product: ' + product.name + '\nPrice: HK$' + product.price + '\nSaved successfully!');
+            // Reset form
+            document.getElementById('productName').value = '';
+            document.getElementById('productDesc').value = '';
+            document.getElementById('productPrice').value = '';
+            document.getElementById('productCategory').value = '';
+            document.getElementById('productImage').value = '';
+            document.getElementById('imagePreview').style.display = 'none';
+        }
+    </script>
+</body>
+</html>

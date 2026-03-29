@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>新天利裝飾材料 | Sun Tin Lee Decoration & Metal</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { 
+            max-width: 400px; 
+            margin: 0 auto; 
+            background: #f8f9fa; 
+            font-family: Arial, 'Microsoft JhengHei', sans-serif; 
+            padding-bottom: 80px;
+        }
+        
+        .header { 
+            background: #2c3e50; 
+            color: white; 
+            padding: 20px;
+        }
+        
+        .company-name h4 {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .company-badge { 
+            background: rgba(255,255,255,0.2); 
+            padding: 5px 10px; 
+            border-radius: 4px; 
+            font-size: 0.8em; 
+            display: inline-block;
+            margin-top: 5px;
+        }
+        
+        .info-card {
+            background: white;
+            padding: 20px;
+            margin: 15px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border-left: 4px solid #2c3e50;
+        }
+        
+        .category-btn { 
+            border: 2px solid #2c3e50; 
+            color: #2c3e50; 
+            background: white; 
+            border-radius: 20px; 
+            padding: 8px 20px; 
+            margin: 5px;
+            font-weight: 500;
+        }
+        
+        .category-btn.active { 
+            background: #2c3e50; 
+            color: white; 
+        }
+        
+        .product-card { 
+            border: 1px solid #e0e0e0; 
+            border-radius: 10px; 
+            margin: 15px; 
+            background: white; 
+            padding: 15px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+        }
+        
+        .checkout-btn {
+            background: #27ae60;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            width: 100%;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        
+        .cart-summary {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            padding: 15px;
+            border-top: 2px solid #2c3e50;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="d-flex justify-content-between align-items-center">
+            <div>
+                <h4 class="mb-1">新天利裝飾材料有限公司</h4>
+                <p class="mb-0" style="font-size: 0.9em; opacity: 0.9;">SUN TIN LEE DECORATION AND METAL MATERIALS LIMITED</p>
+                <div class="company-badge">Est. 1992 • Wan Chai, Hong Kong</div>
+            </div>
+            <div>
+                <button class="btn btn-sm btn-light" onclick="setLang('en')">EN</button>
+                <button class="btn btn-sm btn-light" onclick="setLang('zh')">中文</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Business Info -->
+    <div class="info-card">
+        <h6 style="color: #2c3e50; margin-bottom: 15px;">公司資料 / Company Information</h6>
+        <p><strong>Address 地址:</strong><br>248 Lockhart Road, Wan Chai, Hong Kong</p>
+        <p><strong>Tel 電話:</strong> (852) 2507 4944</p>
+        <!-- No fax number (not on business card) -->
+    </div>
+
+    <!-- Categories -->
+    <div style="padding: 15px; background: white; margin: 0 15px 15px 15px; border-radius: 10px;">
+        <h6 style="color: #2c3e50; margin-bottom: 15px;">產品分類 / Product Categories</h6>
+        <div style="display: flex; flex-wrap: wrap;">
+            <button class="category-btn active" onclick="setCategory('all')">All / 全部</button>
+            <button class="category-btn" onclick="setCategory('metal')">Metal / 金屬材料</button>
+            <button class="category-btn" onclick="setCategory('decoration')">Decoration / 裝飾材料</button>
+            <button class="category-btn" onclick="setCategory('tools')">Tools / 工具</button>
+        </div>
+    </div>
+
+    <!-- Products -->
+    <div id="productsContainer">
+        <div class="product-card">
+            <h6>304不鏽鋼板 / Stainless Steel Sheet 304</h6>
+            <p style="color: #666; font-size: 0.9em; margin-bottom: 10px;">2毫米厚度，4x8英尺 / 2mm thickness, 4x8 feet</p>
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <strong style="color: #2c3e50; font-size: 1.1em;">HK$1,280.00</strong>
+                <button style="background: #2c3e50; color: white; border: none; padding: 6px 12px; border-radius: 4px;" onclick="addToCart(1)">
+                    Add to Cart / 加入購物車
+                </button>
+            </div>
+        </div>
+        
+        <div class="product-card">
+            <h6>鋁角鐵 / Aluminum Angle Bar</h6>
+            <p style="color: #666; font-size: 0.9em; margin-bottom: 10px;">1吋 x 1吋 x 1/8吋，6英尺長 / 1" x 1" x 1/8", 6 feet length</p>
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <strong style="color: #2c3e50; font-size: 1.1em;">HK$85.50</strong>
+                <button style="background: #2c3e50; color: white; border: none; padding: 6px 12px; border-radius: 4px;" onclick="addToCart(2)">
+                    Add to Cart / 加入購物車
+                </button>
+            </div>
+        </div>
+        
+        <div class="product-card">
+            <h6>裝飾牆板 / Decorative Wall Panel</h6>
+            <p style="color: #666; font-size: 0.9em; margin-bottom: 10px;">木紋PVC，4x8英尺 / Wood grain PVC, 4x8 feet</p>
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <strong style="color: #2c3e50; font-size: 1.1em;">HK$320.00</strong>
+                <button style="background: #2c3e50; color: white; border: none; padding: 6px 12px; border-radius: 4px;" onclick="addToCart(3)">
+                    Add to Cart / 加入購物車
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cart Summary -->
+    <div class="cart-summary" id="cartSummary" style="display: none;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+            <span id="cartItemsCount">0 items</span>
+            <strong id="cartTotal">HK$0.00</strong>
+        </div>
+        <button class="checkout-btn" onclick="checkout()" id="checkoutBtn">
+            Checkout with PayMe / 使用PayMe結帳
+        </button>
+    </div>
+
+    <script>
+        let cart = [];
+        let currentLanguage = 'en';
+        
+        function setLang(lang) {
+            currentLanguage = lang;
+            // Simple language toggle
+            const buttons = document.querySelectorAll('button');
+            buttons.forEach(btn => {
+                if (btn.textContent.includes('/')) {
+                    const parts = btn.textContent.split(' / ');
+                    btn.textContent = lang === 'en' ? parts[0] : parts[1];
+                }
+            });
+            
+            // Update checkout button
+            document.getElementById('checkoutBtn').textContent = 
+                lang === 'en' ? 'Checkout with PayMe' : '使用PayMe結帳';
+        }
+        
+        function setCategory(category) {
+            // Update active button
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            // In a real app, this would filter products
+        }
+        
+        function addToCart(productId) {
+            const products = {
+                1: { name: 'Stainless Steel Sheet 304', price: 1280.00 },
+                2: { name: 'Aluminum Angle Bar', price: 85.50 },
+                3: { name: 'Decorative Wall Panel', price: 320.00 }
+            };
+            
+            const product = products[productId];
+            cart.push(product);
+            updateCart();
+            
+            alert((currentLanguage === 'en' ? 'Added to cart: ' : '已加入購物車: ') + product.name);
+        }
+        
+        function updateCart() {
+            const cartSummary = document.getElementById('cartSummary');
+            if (cart.length > 0) {
+                cartSummary.style.display = 'block';
+                const total = cart.reduce((sum, item) => sum + item.price, 0);
+                const itemText = cart.length === 1 ? '1 item' : cart.length + ' items';
+                document.getElementById('cartItemsCount').textContent = itemText;
+                document.getElementById('cartTotal').textContent = 'HK$' + total.toFixed(2);
+            } else {
+                cartSummary.style.display = 'none';
+            }
+        }
+        
+        function checkout() {
+            if (cart.length === 0) {
+                alert(currentLanguage === 'en' ? 'Cart is empty' : '購物車是空的');
+                return;
+            }
+            const total = cart.reduce((sum, item) => sum + item.price, 0);
+            alert((currentLanguage === 'en' ? 'Order total: HK$' : '訂單總額: HK$') + total.toFixed(2) + 
+                  '\n\n' + (currentLanguage === 'en' ? 'PayMe QR code would appear here.' : 'PayMe QR碼會在這裡顯示。'));
+            cart = [];
+            updateCart();
+        }
+        
+        // Initialize with English
+        document.addEventListener('DOMContentLoaded', () => {
+            setLang('en');
+        });
+    </script>
+</body>
+</html>

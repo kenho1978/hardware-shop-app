@@ -1,0 +1,44 @@
+### Health Check
+GET http://localhost:4000/api/health
+
+### Get Products
+GET http://localhost:4000/api/products
+
+### Create Order with PayMe QR
+POST http://localhost:4000/api/orders
+Content-Type: application/json
+
+{
+  "items": [
+    {
+      "productId": "1",
+      "quantity": 2
+    },
+    {
+      "productId": "4",
+      "quantity": 1
+    }
+  ],
+  "customerName": "Chan Tai Man",
+  "customerPhone": "91234567",
+  "customerEmail": "chan@example.com",
+  "shippingAddress": {
+    "street": "123 Main Street",
+    "district": "Central",
+    "city": "Hong Kong"
+  }
+}
+
+### Get Order Status
+GET http://localhost:4000/api/orders/ORD123456
+
+### Admin: List All Orders
+GET http://localhost:4000/api/admin/orders
+
+### Admin: Update Order Status
+PUT http://localhost:4000/api/admin/orders/ORD123456/status
+Content-Type: application/json
+
+{
+  "status": "paid"
+}

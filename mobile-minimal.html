@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hardware Shop Mobile</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { max-width: 400px; margin: 0 auto; background: #f5f5f5; }
+        .header { background: #007AFF; color: white; padding: 15px; }
+        .product-card { border: 1px solid #ddd; border-radius: 10px; padding: 15px; margin: 10px; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h4>🛠️ Hardware Shop / 五金商店</h4>
+        <div>
+            <button class="btn btn-sm btn-light" onclick="setLang('en')">EN</button>
+            <button class="btn btn-sm btn-light" onclick="setLang('zh')">中文</button>
+        </div>
+    </div>
+    
+    <div class="container mt-3">
+        <h5 id="productTitle">Products / 產品</h5>
+        
+        <div class="product-card">
+            <h6 id="product1Name">Hammer / 鐵鎚</h6>
+            <p id="product1Desc">16oz Claw Hammer / 16安士爪鎚</p>
+            <p><strong>HK$89.90</strong></p>
+            <button class="btn btn-primary" onclick="addToCart()" id="addBtn">Add to Cart / 加入購物車</button>
+        </div>
+        
+        <div class="product-card">
+            <h6 id="product2Name">Screwdriver Set / 螺絲批套裝</h6>
+            <p id="product2Desc">10-piece set / 10件套裝</p>
+            <p><strong>HK$129.90</strong></p>
+            <button class="btn btn-primary" onclick="addToCart()">Add to Cart / 加入購物車</button>
+        </div>
+        
+        <div class="mt-3">
+            <button class="btn btn-success w-100" onclick="checkout()" id="checkoutBtn">
+                Checkout with PayMe / 使用PayMe結帳
+            </button>
+        </div>
+    </div>
+    
+    <script>
+        let currentLang = 'en';
+        let cartCount = 0;
+        
+        function setLang(lang) {
+            currentLang = lang;
+            updateText();
+        }
+        
+        function updateText() {
+            if (currentLang === 'en') {
+                document.getElementById('productTitle').textContent = 'Products';
+                document.getElementById('product1Name').textContent = 'Hammer';
+                document.getElementById('product1Desc').textContent = '16oz Claw Hammer';
+                document.getElementById('addBtn').textContent = 'Add to Cart';
+                document.getElementById('checkoutBtn').textContent = 'Checkout with PayMe';
+            } else {
+                document.getElementById('productTitle').textContent = '產品';
+                document.getElementById('product1Name').textContent = '鐵鎚';
+                document.getElementById('product1Desc').textContent = '16安士爪鎚';
+                document.getElementById('addBtn').textContent = '加入購物車';
+                document.getElementById('checkoutBtn').textContent = '使用PayMe結帳';
+            }
+        }
+        
+        function addToCart() {
+            cartCount++;
+            alert(currentLang === 'en' ? 'Added to cart!' : '已加入購物車！');
+        }
+        
+        function checkout() {
+            alert(currentLang === 'en' ? 
+                'PayMe QR code would appear here' : 
+                'PayMe QR碼會在這裡顯示');
+        }
+    </script>
+</body>
+</html>
