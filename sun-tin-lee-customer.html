@@ -5,78 +5,74 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>新天利裝飾材料 | Sun Tin Lee</title>
     <style>
+        /* Business Card Exact Colors */
         :root {
-            --bg-cream: #F3EDE6;
-            --bg-clean: #FAF8F5;
-            --text-navy: #222D3E;
-            --accent-red: #C8483F;
-            --logo-grey: #81766D;
+            --red: #B73A33;
+            --cream: #F3EDE6;
+            --navy: #222D3E;
+            --grey: #81766D;
             --white: #FFFFFF;
         }
         
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Microsoft JhengHei', sans-serif;
-            background: var(--bg-cream);
-            color: var(--text-navy);
+            font-family: Arial, 'Microsoft JhengHei', sans-serif;
+            background: var(--cream);
+            color: var(--navy);
             max-width: 400px;
             margin: 0 auto;
             min-height: 100vh;
-            padding-bottom: 80px;
+            padding-bottom: 70px;
         }
         
-        /* Header */
+        /* Header - Matches Business Card */
         .header {
-            background: var(--accent-red);
-            color: var(--white);
-            padding: 16px 20px;
-        }
-        
-        .header-top {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 12px;
+            background: var(--red);
+            padding: 20px;
+            text-align: center;
         }
         
         .logo-area {
             display: flex;
             align-items: center;
-            gap: 10px;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 8px;
         }
         
         .logo-img {
-            width: 40px;
-            height: 40px;
-            border-radius: 4px;
+            width: 50px;
+            height: 50px;
+            border-radius: 6px;
+            background: var(--white);
             object-fit: contain;
-            background: white;
         }
         
         .company-name {
-            font-size: 16px;
-            font-weight: 700;
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--white);
         }
         
         .company-name-en {
             font-size: 10px;
-            opacity: 0.9;
+            color: rgba(255,255,255,0.9);
         }
         
-        /* Business Info */
-        .business-info {
-            background: var(--bg-clean);
+        /* Info Card - Matches Business Card */
+        .info-card {
+            background: var(--white);
             margin: 16px;
             padding: 16px;
             border-radius: 10px;
-            border: 1px solid rgba(34,45,62,0.1);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
         
         .info-row {
             display: flex;
             align-items: flex-start;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
         }
         
         .info-row:last-child { margin-bottom: 0; }
@@ -84,27 +80,27 @@
         .info-icon {
             width: 24px;
             height: 24px;
-            background: var(--accent-red);
-            color: white;
+            background: var(--red);
             border-radius: 4px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 12px;
             margin-right: 10px;
+            color: white;
+            font-size: 12px;
         }
         
         .info-content { flex: 1; }
         
         .info-label {
             font-size: 10px;
-            color: var(--logo-grey);
-            margin-bottom: 2px;
+            color: var(--grey);
+            text-transform: uppercase;
         }
         
         .info-value {
             font-size: 13px;
-            font-weight: 500;
+            color: var(--navy);
         }
         
         /* Language Toggle */
@@ -117,18 +113,18 @@
         
         .lang-btn {
             padding: 8px 20px;
-            border: 2px solid var(--text-navy);
+            border: 2px solid var(--navy);
             background: transparent;
-            color: var(--text-navy);
+            color: var(--navy);
             font-size: 12px;
-            font-weight: 600;
+            font-weight: bold;
             cursor: pointer;
             border-radius: 20px;
         }
         
         .lang-btn.active {
-            background: var(--text-navy);
-            color: white;
+            background: var(--navy);
+            color: var(--white);
         }
         
         /* Categories */
@@ -139,9 +135,9 @@
         
         .section-title {
             font-size: 14px;
-            font-weight: 600;
+            font-weight: bold;
+            color: var(--navy);
             margin-bottom: 12px;
-            color: var(--text-navy);
         }
         
         .category-grid {
@@ -151,94 +147,96 @@
         }
         
         .category-card {
-            background: white;
+            background: var(--white);
             border: 1px solid rgba(34,45,62,0.1);
             border-radius: 8px;
             padding: 12px 8px;
             text-align: center;
             cursor: pointer;
-            transition: all 0.2s;
-        }
-        
-        .category-card:hover, .category-card.active {
-            border-color: var(--accent-red);
         }
         
         .category-card.active {
-            background: var(--accent-red);
-            color: white;
+            background: var(--red);
+            color: var(--white);
         }
         
         .category-icon { font-size: 20px; margin-bottom: 4px; }
         
-        .category-name { font-size: 10px; font-weight: 600; }
+        .category-name {
+            font-size: 10px;
+            font-weight: bold;
+        }
         
         /* Products */
         .products { padding: 0 16px; }
         
         .product-card {
-            background: white;
+            background: var(--white);
             border: 1px solid rgba(34,45,62,0.1);
             border-radius: 10px;
             padding: 14px;
             margin-bottom: 12px;
-        }
-        
-        .product-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 8px;
-        }
-        
-        .product-name { font-size: 14px; font-weight: 600; flex: 1; }
-        
-        .product-price {
-            font-size: 16px;
-            font-weight: 700;
-            color: var(--accent-red);
-        }
-        
-        .product-desc {
-            font-size: 12px;
-            color: var(--logo-grey);
-            margin-bottom: 10px;
-            line-height: 1.4;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
         }
         
         .product-img {
             width: 100%;
-            height: 120px;
+            height: 150px;
             object-fit: cover;
             border-radius: 6px;
-            background: #f0f0f0;
+            background: var(--cream);
             margin-bottom: 10px;
         }
         
-        .add-to-cart {
-            width: 100%;
-            padding: 10px;
-            background: var(--text-navy);
-            color: white;
+        .product-name {
+            font-size: 14px;
+            font-weight: bold;
+            color: var(--navy);
+            margin-bottom: 4px;
+        }
+        
+        .product-desc {
+            font-size: 12px;
+            color: var(--grey);
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+        
+        .product-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .product-price {
+            font-size: 16px;
+            font-weight: bold;
+            color: var(--red);
+        }
+        
+        .add-btn {
+            padding: 8px 16px;
+            background: var(--navy);
+            color: var(--white);
             border: none;
             border-radius: 6px;
-            font-size: 13px;
-            font-weight: 600;
+            font-size: 12px;
+            font-weight: bold;
             cursor: pointer;
         }
         
-        .add-to-cart:hover { background: var(--accent-red); }
+        .add-btn:hover { background: var(--red); }
         
-        /* Cart Summary */
-        .cart-summary {
+        /* Cart Bar */
+        .cart-bar {
             position: fixed;
             bottom: 0;
             left: 50%;
             transform: translateX(-50%);
             width: 100%;
             max-width: 400px;
-            background: var(--text-navy);
-            color: white;
+            background: var(--navy);
+            color: var(--white);
             padding: 14px 16px;
             display: none;
             z-index: 100;
@@ -259,25 +257,25 @@
         .cart-count {
             width: 28px;
             height: 28px;
-            background: var(--accent-red);
+            background: var(--red);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 13px;
-            font-weight: 700;
+            font-weight: bold;
         }
         
-        .cart-total { font-size: 18px; font-weight: 700; }
+        .cart-total { font-size: 18px; font-weight: bold; }
         
         .checkout-btn {
             padding: 10px 20px;
-            background: var(--accent-red);
-            color: white;
+            background: var(--red);
+            color: var(--white);
             border: none;
             border-radius: 6px;
             font-size: 14px;
-            font-weight: 600;
+            font-weight: bold;
             cursor: pointer;
         }
         
@@ -287,47 +285,41 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background: rgba(0,0,0,0.8);
-            color: white;
+            background: rgba(34,45,62,0.9);
+            color: var(--white);
             padding: 16px 32px;
             border-radius: 8px;
             font-size: 16px;
-            z-index: 1000;
+            z-index: 200;
             display: none;
         }
-        
-        .toast.show { display: block; animation: fadeIn 0.3s; }
-        
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
 </head>
 <body>
-    <!-- Header -->
+    <!-- Header - Matches Business Card -->
     <div class="header">
-        <div class="header-top">
-            <div class="logo-area">
-                <img src="Logo.jpg" class="logo-img" onerror="this.style.display='none'">
-                <div>
-                    <div class="company-name">新天利裝飾材料有限公司</div>
-                    <div class="company-name-en">SUN TIN LEE</div>
-                </div>
+        <div class="logo-area">
+            <img src="Logo.jpg" class="logo-img">
+            <div>
+                <div class="company-name">新天利裝飾材料有限公司</div>
+                <div class="company-name-en">SUN TIN LEE</div>
             </div>
         </div>
     </div>
     
-    <!-- Business Info -->
-    <div class="business-info">
+    <!-- Info Card -->
+    <div class="info-card">
         <div class="info-row">
             <div class="info-icon">📍</div>
             <div class="info-content">
-                <div class="info-label" id="addrLabel">地址 ADDRESS</div>
+                <div class="info-label" id="addrLabel">ADDRESS</div>
                 <div class="info-value" id="addrValue">248 Lockhart Road, Wan Chai</div>
             </div>
         </div>
         <div class="info-row">
             <div class="info-icon">📞</div>
             <div class="info-content">
-                <div class="info-label" id="phoneLabel">電話 TEL</div>
+                <div class="info-label" id="phoneLabel">TEL</div>
                 <div class="info-value" id="phoneValue">(852) 2507 4944</div>
             </div>
         </div>
@@ -341,21 +333,21 @@
     
     <!-- Categories -->
     <div class="categories">
-        <div class="section-title" id="catTitle">產品分類</div>
+        <div class="section-title" id="catTitle">PRODUCTS</div>
         <div class="category-grid">
-            <div class="category-card active" onclick="filterCategory('all')">
+            <div class="category-card active" onclick="filterCat('all')">
                 <div class="category-icon">🛒</div>
                 <div class="category-name" id="catAll">全部</div>
             </div>
-            <div class="category-card" onclick="filterCategory('metal')">
+            <div class="category-card" onclick="filterCat('metal')">
                 <div class="category-icon">🔩</div>
                 <div class="category-name" id="catMetal">金屬</div>
             </div>
-            <div class="category-card" onclick="filterCategory('decoration')">
+            <div class="category-card" onclick="filterCat('decoration')">
                 <div class="category-icon">🎨</div>
                 <div class="category-name" id="catDeco">裝飾</div>
             </div>
-            <div class="category-card" onclick="filterCategory('tools')">
+            <div class="category-card" onclick="filterCat('tools')">
                 <div class="category-icon">🛠️</div>
                 <div class="category-name" id="catTools">工具</div>
             </div>
@@ -365,12 +357,12 @@
     <!-- Products -->
     <div class="products" id="productsList"></div>
     
-    <!-- Cart Summary -->
-    <div class="cart-summary" id="cartSummary">
+    <!-- Cart Bar -->
+    <div class="cart-bar" id="cartBar">
         <div class="cart-content">
             <div class="cart-info">
                 <div class="cart-count" id="cartCount">0</div>
-                <div class="cart-total" id="cartTotal">HK$0.00</div>
+                <div class="cart-total" id="cartTotal">HK$0</div>
             </div>
             <button class="checkout-btn" id="checkoutBtn" onclick="checkout()">結帳</button>
         </div>
@@ -387,17 +379,14 @@
                 addrValue: '248 Lockhart Road, Wan Chai, Hong Kong',
                 phoneLabel: 'TEL',
                 phoneValue: '(852) 2507 4944',
-                catTitle: 'PRODUCT CATEGORIES',
-                catAll: 'ALL',
-                catMetal: 'METAL',
-                catDeco: 'DECO',
-                catTools: 'TOOLS',
-                products: 'PRODUCTS',
+                catTitle: 'PRODUCTS',
+                catAll: '全部 ALL',
+                catMetal: '金屬 METAL',
+                catDeco: '裝飾 DECO',
+                catTools: '工具 TOOLS',
                 addToCart: 'ADD TO CART',
                 added: 'ADDED!',
                 checkout: 'CHECKOUT',
-                total: 'TOTAL',
-                items: 'ITEMS',
                 empty: 'No products yet'
             },
             zh: {
@@ -405,17 +394,14 @@
                 addrValue: '香港灣仔駱克道248號',
                 phoneLabel: '電話',
                 phoneValue: '(852) 2507 4944',
-                catTitle: '產品分類',
+                catTitle: '產品',
                 catAll: '全部',
                 catMetal: '金屬材料',
                 catDeco: '裝飾材料',
                 catTools: '工具',
-                products: '產品',
                 addToCart: '加入購物車',
                 added: '已加入！',
                 checkout: '結帳',
-                total: '總計',
-                items: '件商品',
                 empty: '暫無產品'
             }
         };
@@ -427,7 +413,6 @@
         // Load products from API
         async function loadProducts() {
             try {
-                // Use relative URL - works through tunnel
                 const res = await fetch('/api/products');
                 products = await res.json();
                 renderProducts();
@@ -447,18 +432,18 @@
             list.innerHTML = products.map(p => `
                 <div class="product-card">
                     <img src="${p.image || 'https://via.placeholder.com/300x200?text=No+Image'}" class="product-img" onerror="this.src='https://via.placeholder.com/300x200?text=No+Image'">
-                    <div class="product-header">
-                        <div class="product-name">${p.name}</div>
-                        <div class="product-price">HK$${p.price.toFixed(2)}</div>
-                    </div>
+                    <div class="product-name">${p.name}</div>
                     <div class="product-desc">${p.description || ''}</div>
-                    <button class="add-to-cart" onclick="addToCart(${p.id})">${t[currentLang].addToCart}</button>
+                    <div class="product-footer">
+                        <div class="product-price">HK$${p.price.toFixed(2)}</div>
+                        <button class="add-btn" onclick="addToCart(${p.id})">${t[currentLang].addToCart}</button>
+                    </div>
                 </div>
             `).join('');
         }
         
         // Filter by category
-        function filterCategory(cat) {
+        function filterCat(cat) {
             document.querySelectorAll('.category-card').forEach(c => c.classList.remove('active'));
             event.target.closest('.category-card').classList.add('active');
             
@@ -473,12 +458,12 @@
                     list.innerHTML = filtered.map(p => `
                         <div class="product-card">
                             <img src="${p.image || 'https://via.placeholder.com/300x200?text=No+Image'}" class="product-img" onerror="this.src='https://via.placeholder.com/300x200?text=No+Image'">
-                            <div class="product-header">
-                                <div class="product-name">${p.name}</div>
-                                <div class="product-price">HK$${p.price.toFixed(2)}</div>
-                            </div>
+                            <div class="product-name">${p.name}</div>
                             <div class="product-desc">${p.description || ''}</div>
-                            <button class="add-to-cart" onclick="addToCart(${p.id})">${t[currentLang].addToCart}</button>
+                            <div class="product-footer">
+                                <div class="product-price">HK$${p.price.toFixed(2)}</div>
+                                <button class="add-btn" onclick="addToCart(${p.id})">${t[currentLang].addToCart}</button>
+                            </div>
                         </div>
                     `).join('');
                 }
@@ -488,7 +473,6 @@
         // Set language
         function setLang(lang) {
             currentLang = lang;
-            
             document.getElementById('btnEn').classList.toggle('active', lang === 'en');
             document.getElementById('btnZh').classList.toggle('active', lang === 'zh');
             
@@ -503,7 +487,6 @@
             document.getElementById('catDeco').textContent = tx.catDeco;
             document.getElementById('catTools').textContent = tx.catTools;
             document.getElementById('checkoutBtn').textContent = tx.checkout;
-            
             renderProducts();
         }
         
@@ -517,16 +500,16 @@
             }
         }
         
-        // Update cart display
+        // Update cart
         function updateCart() {
-            const summary = document.getElementById('cartSummary');
+            const bar = document.getElementById('cartBar');
             if (cart.length > 0) {
-                summary.style.display = 'block';
+                bar.style.display = 'block';
                 const total = cart.reduce((sum, p) => sum + p.price, 0);
                 document.getElementById('cartCount').textContent = cart.length;
                 document.getElementById('cartTotal').textContent = 'HK$' + total.toFixed(2);
             } else {
-                summary.style.display = 'none';
+                bar.style.display = 'none';
             }
         }
         
@@ -534,8 +517,8 @@
         function showToast(msg) {
             const toast = document.getElementById('toast');
             toast.textContent = msg;
-            toast.classList.add('show');
-            setTimeout(() => toast.classList.remove('show'), 1500);
+            toast.style.display = 'block';
+            setTimeout(() => toast.style.display = 'none', 1500);
         }
         
         // Checkout
