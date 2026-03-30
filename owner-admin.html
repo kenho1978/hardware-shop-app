@@ -880,32 +880,41 @@
                 // Compress first
                 var compressed = await compressImage(file);
                 
-                // Upload to imgBB (free, no rate limits)
+                // Upload to postimages (no API key needed)
                 var formData = new FormData();
-                formData.append('image', compressed.split(',')[1]);
+                formData.append('file', compressed.split(',')[1]); // base64 without header
+                formData.append('token', 'abc123'); // dummy token
+                formData.append('hidelinks', '1');
+                formData.append('adult', 'no');
                 
-                var response = await fetch('https://api.imgbb.com/1/upload?key=6d6a5f8e4d6a5f8e4d6a5f8e4d6a5f8e', {
+                var response = await fetch('https://postimages.org/api/upload?token=postimages-free', {
                     method: 'POST',
                     body: formData
                 });
                 
                 var data = await response.json();
-                if (data.success && data.data.url) {
+                if (data.url) {
                     status.textContent = '✅ Uploaded!';
                     status.style.color = 'green';
-                    preview.src = data.data.url;
+                    preview.src = data.url;
                     preview.style.display = 'block';
-                    window.currentImage = data.data.url;
+                    window.currentImage = data.url;
                 } else {
                     throw new Error('Upload failed');
                 }
             } catch (err) {
-                // Fallback to compressed base64
-                status.textContent = '✅ Saved locally';
-                status.style.color = 'orange';
-                preview.src = compressed;
-                preview.style.display = 'block';
-                window.currentImage = compressed;
+                // Fallback to localStorage
+                try {
+                    localStorage.setItem('pendingImage', compressed);
+                    status.textContent = '⚠️ Will save on next page load';
+                    status.style.color = 'orange';
+                    preview.src = compressed;
+                    preview.style.display = 'block';
+                    window.currentImage = compressed;
+                } catch (e) {
+                    status.textContent = '❌ Image too large';
+                    status.style.color = 'red';
+                }
             }
         }
         
@@ -917,13 +926,13 @@
                     var img = new Image();
                     img.onload = function() {
                         var canvas = document.createElement('canvas');
-                        var maxSize = 600;
+                        var maxSize = 800;
                         var ratio = Math.min(maxSize / img.width, maxSize / img.height);
                         canvas.width = img.width * ratio;
                         canvas.height = img.height * ratio;
                         var ctx = canvas.getContext('2d');
                         ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-                        resolve(canvas.toDataURL('image/jpeg', 0.7));
+                        resolve(canvas.toDataURL('image/jpeg', 0.6));
                     };
                     img.onerror = reject;
                     img.src = e.target.result;
