@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>新天利 | Sun Tin Lee</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Microsoft JhengHei', sans-serif;
+            background: linear-gradient(135deg, #C8483F 0%, #222D3E 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            color: white;
+        }
+        .logo {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+        h1 {
+            font-size: 28px;
+            margin-bottom: 5px;
+            text-align: center;
+        }
+        .subtitle {
+            color: rgba(255,255,255,0.8);
+            margin-bottom: 40px;
+            text-align: center;
+        }
+        .btn {
+            display: block;
+            width: 100%;
+            max-width: 320px;
+            padding: 20px 30px;
+            margin: 15px 0;
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 12px;
+            transition: transform 0.2s;
+        }
+        .btn:active {
+            transform: scale(0.98);
+        }
+        .btn-customer {
+            background: white;
+            color: #C8483F;
+        }
+        .btn-admin {
+            background: #222D3E;
+            color: white;
+            border: 2px solid white;
+        }
+        .btn-share {
+            background: transparent;
+            color: white;
+            border: 2px solid rgba(255,255,255,0.5);
+        }
+        .info {
+            margin-top: 40px;
+            text-align: center;
+            color: rgba(255,255,255,0.7);
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="logo">🏪</div>
+    <h1>新天利 X 毅信</h1>
+    <p class="subtitle">裝飾材料有限公司</p>
+    
+    <a href="sun-tin-lee-customer.html" class="btn btn-customer">
+        👤 客戶訂貨 Customer App
+    </a>
+    
+    <a href="owner-admin.html" class="btn btn-admin">
+        🔐 管理後台 Admin Panel
+    </a>
+    
+    <button class="btn btn-share" onclick="shareLinks()">
+        📲 分享連結 Share
+    </button>
+    
+    <div class="info">
+        <p>248 Lockhart Road, Wan Chai</p>
+        <p>Tel: 2507 4944</p>
+    </div>
+    
+    <script>
+        function shareLinks() {
+            var text = '新天利訂貨系統\n\n客戶: https://s.tlapp.uk/c\n管理: https://s.tlapp.uk/a';
+            if (navigator.share) {
+                navigator.share({ text: text }).catch(() => {});
+            } else {
+                prompt('Copy this link:', text);
+            }
+        }
+    </script>
+</body>
+</html>
