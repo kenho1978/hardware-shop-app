@@ -484,10 +484,9 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="form-label">圖片 IMAGE (可相機拍攝)</label>
-                        <input type="file" id="editProductImage" accept="image/*" capture="environment" onchange="previewEditImage(this)" style="width: 100%; padding: 12px; border: 2px dashed #C8483F; border-radius: 8px; background: #fff;">
-                        <div id="editUploadText" style="margin-top: 8px; font-size: 12px; color: #666;">選擇新照片或拍攝</div>
-                        <img id="editImagePreview" style="max-width: 100%; max-height: 150px; margin-top: 10px; display: none; border-radius: 8px;">
+                        <label class="form-label">圖片 IMAGE URL</label>
+                        <input type="text" id="editProductImageUrl" placeholder="粘貼圖片URL" style="width: 100%; padding: 10px; border: 2px solid #C8483F; border-radius: 8px; font-size: 13px;">
+                        <div style="margin-top: 8px; font-size: 11px; color: #666;">粘貼圖片URL</div>
                     </div>
                     <div style="display: flex; gap: 8px; margin-top: 16px;">
                         <button type="button" class="btn btn-primary" style="flex: 1;" onclick="handleEditProduct()">✅ 保存 SAVE</button>
@@ -534,9 +533,13 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="form-label">產品圖片 IMAGE (可相機拍攝)</label>
-                            <input type="file" id="productImage" accept="image/*" capture="environment" onchange="previewProductImage(this)" style="width: 100%; padding: 12px; border: 2px dashed #C8483F; border-radius: 8px; background: #fff;">
-                            <div id="uploadText" style="margin-top: 8px; font-size: 12px; color: #666;">選擇照片或拍攝新照片</div>
+                            <label class="form-label">產品圖片 IMAGE (粘貼URL)</label>
+                            <input type="text" id="productImageUrl" placeholder="粘貼圖片URL，例如 https://..." style="width: 100%; padding: 10px; border: 2px solid #C8483F; border-radius: 8px; font-size: 13px;">
+                            <div style="margin-top: 8px; font-size: 11px; color: #666;">
+                                <b>方法:</b> 1. 上傳圖片到 https://imgur.com (免費)<br>
+                                2. 複製圖片連結粘貼到這裡<br>
+                                3. 或直接粘貼網上圖片URL
+                            </div>
                             <img id="productImagePreview" style="max-width: 100%; max-height: 150px; margin-top: 10px; display: none; border-radius: 8px;">
                         </div>
                         <button type="button" class="btn btn-primary" style="padding: 14px;" onclick="handleAddProduct()">✅ 保存產品 SAVE PRODUCT</button>
