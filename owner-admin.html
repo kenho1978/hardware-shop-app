@@ -533,14 +533,14 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="form-label">產品圖片 IMAGE (粘貼URL)</label>
-                            <input type="text" id="productImageUrl" placeholder="粘貼圖片URL，例如 https://..." style="width: 100%; padding: 10px; border: 2px solid #C8483F; border-radius: 8px; font-size: 13px;">
+                            <label class="form-label">產品圖片 IMAGE</label>
+                            <input type="text" id="productImageUrl" placeholder="粘貼圖片URL，例如 https://..." oninput="previewUrlImage(this)" style="width: 100%; padding: 10px; border: 2px solid #C8483F; border-radius: 8px; font-size: 13px;">
                             <div style="margin-top: 8px; font-size: 11px; color: #666;">
                                 <b>方法:</b> 1. 上傳圖片到 https://imgur.com (免費)<br>
-                                2. 複製圖片連結粘貼到這裡<br>
-                                3. 或直接粘貼網上圖片URL
+                                2. 複製圖片連結粘貼到這裡
                             </div>
                             <img id="productImagePreview" style="max-width: 100%; max-height: 150px; margin-top: 10px; display: none; border-radius: 8px;">
+                            <div id="imageSizeInfo" style="margin-top: 5px; font-size: 11px; color: #666;"></div>
                         </div>
                         <button type="button" class="btn btn-primary" style="padding: 14px;" onclick="handleAddProduct()">✅ 保存產品 SAVE PRODUCT</button>
                     </div>
