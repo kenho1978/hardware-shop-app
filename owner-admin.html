@@ -865,6 +865,60 @@
             }
         }
         
+        // Handle image upload from camera
+        async function handleImageUpload(input) {
+            var file = input.files[0];
+            if (!file) return;
+            
+            var status = document.getElementById('imageStatus');
+            var preview = document.getElementById('productImagePreview');
+            
+            status.textContent = 'Compressing...';
+            status.style.color = 'blue';
+            
+            try {
+                // Compress image
+                var compressed = await compressImage(file);
+                var originalKB = Math.round(file.size / 1024);
+                var compressedKB = Math.round(compressed.length * 0.75 / 1024);
+                
+                status.textContent = '✅ ' + compressedKB + 'KB (from ' + originalKB + 'KB)';
+                status.style.color = 'green';
+                
+                preview.src = compressed;
+                preview.style.display = 'block';
+                window.currentImage = compressed;
+                
+            } catch (err) {
+                status.textContent = '❌ Error: ' + err.message;
+                status.style.color = 'red';
+            }
+        }
+        
+        // Compress image for database
+        async function compressImage(file) {
+            return new Promise((resolve, reject) => {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    var img = new Image();
+                    img.onload = function() {
+                        var canvas = document.createElement('canvas');
+                        var maxSize = 400;
+                        var ratio = Math.min(maxSize / img.width, maxSize / img.height);
+                        canvas.width = img.width * ratio;
+                        canvas.height = img.height * ratio;
+                        var ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                        resolve(canvas.toDataURL('image/jpeg', 0.5));
+                    };
+                    img.onerror = reject;
+                    img.src = e.target.result;
+                };
+                reader.onerror = reject;
+                reader.readAsDataURL(file);
+            });
+        }
+        
         // Handle Add Product
         async function handleAddProduct() {
             var name = document.getElementById('productName').value;
@@ -875,12 +929,14 @@
                 return;
             }
             
+            var image = window.currentImage || 'https://via.placeholder.com/300x200?text=' + encodeURIComponent(name);
+            
             var product = {
                 name: name,
                 description: document.getElementById('productDesc').value,
                 price: price,
                 category: document.getElementById('productCategory').value,
-                image: 'https://via.placeholder.com/300x200?text=' + encodeURIComponent(name)
+                image: image
             };
             
             try {
@@ -895,6 +951,9 @@
                     document.getElementById('productName').value = '';
                     document.getElementById('productDesc').value = '';
                     document.getElementById('productPrice').value = '';
+                    document.getElementById('productImagePreview').style.display = 'none';
+                    document.getElementById('imageStatus').textContent = '點擊上方拍攝或選擇照片';
+                    window.currentImage = null;
                     loadProducts();
                 } else {
                     alert('Error: ' + res.status);
