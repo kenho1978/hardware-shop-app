@@ -2,6 +2,14 @@ const express = require('express');
 const cors = require('cors');
 require('dotenv').config();
 const database = require('./database');
+const cloudinary = require('cloudinary').v2;
+
+// Cloudinary config
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD || 'djpavkcx0',
+  api_key: process.env.CLOUDINARY_KEY || '152924867596416',
+  api_secret: process.env.CLOUDINARY_SECRET || 'AzmhvrVz-KpIxn68D6sO-RwjTjQ'
+});
 
 const app = express();
 const PORT = process.env.PORT || 4000;
@@ -10,6 +18,23 @@ const PORT = process.env.PORT || 4000;
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Image upload endpoint
+app.post('/api/upload', async (req, res) => {
+  try {
+    const { image } = req.body; // base64 image data
+    
+    const result = await cloudinary.uploader.upload(image, {
+      folder: 'hardware-shop',
+      transformation: [{ width: 800, crop: 'limit', quality: 'auto' }]
+    });
+    
+    res.json({ success: true, url: result.secure_url });
+  } catch (error) {
+    console.error('Cloudinary upload error:', error);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
 
 // Serve static files with explicit MIME types
 app.use(express.static('.', {
