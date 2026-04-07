@@ -4,7 +4,7 @@ require('dotenv').config();
 const database = require('./database');
 const cloudinary = require('cloudinary').v2;
 
-// Cloudinary config
+// Cloudinary config - Updated for image upload
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD || 'djpavkcx0',
   api_key: process.env.CLOUDINARY_KEY || '152924867596416',
