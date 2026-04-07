@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Camera Test 2</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body style="font-family: sans-serif; padding: 20px; text-align: center;">
+    <h1>📷 Camera Test 2</h1>
+    
+    <video id="video" width="300" height="300" autoplay style="border: 2px solid #ccc; border-radius: 8px; display: none;"></video>
+    <canvas id="canvas" width="300" height="300" style="display: none;"></canvas>
+    
+    <br><br>
+    
+    <button onclick="startCamera()" style="padding: 20px 40px; font-size: 18px; background: #C8483F; color: white; border: none; border-radius: 10px; cursor: pointer;">
+        📸 OPEN CAMERA
+    </button>
+    
+    <br><br>
+    
+    <button onclick="captureAndUpload()" id="captureBtn" style="padding: 20px 40px; font-size: 18px; background: #4CAF4C; color: white; border: none; border-radius: 10px; cursor: pointer; display: none;">
+        📷 CAPTURE PHOTO
+    </button>
+    
+    <br><br>
+    
+    <img id="photo" style="max-width: 100%; max-height: 300px; display: none; border: 2px solid #ccc; border-radius: 8px;">
+    
+    <p id="status" style="margin-top: 20px; color: green;"></p>
+    
+    <script>
+        var stream = null;
+        
+        async function startCamera() {
+            try {
+                stream = await navigator.mediaDevices.getUserMedia({ 
+                    video: { facingMode: 'environment' }, 
+                    audio: false 
+                });
+                document.getElementById('video').srcObject = stream;
+                document.getElementById('video').style.display = 'block';
+                document.getElementById('captureBtn').style.display = 'inline-block';
+                document.getElementById('status').textContent = '✅ Camera opened! Tap CAPTURE to take photo';
+            } catch (err) {
+                document.getElementById('status').textContent = '❌ Camera error: ' + err.message;
+            }
+        }
+        
+        function captureAndUpload() {
+            var video = document.getElementById('video');
+            var canvas = document.getElementById('canvas');
+            var context = canvas.getContext('2d');
+            context.drawImage(video, 0, 0, 300, 300);
+            
+            var dataURL = canvas.toDataURL('image/jpeg', 0.6);
+            document.getElementById('photo').src = dataURL;
+            document.getElementById('photo').style.display = 'block';
+            
+            document.getElementById('status').textContent = '📤 Uploading...';
+            
+            // Stop camera
+            if (stream) {
+                stream.getTracks().forEach(track => track.stop());
+            }
+            
+            // Upload to Cloudinary
+            var formData = new FormData();
+            formData.append('file', dataURL);
+            formData.append('upload_preset', 'hardware-shop');
+            formData.append('cloud_name', 'djpavkcx0');
+            
+            fetch('https://api.cloudinary.com/v1_1/djpavkcx0/image/upload', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.secure_url) {
+                    document.getElementById('status').innerHTML = '✅ Uploaded!<br><a href="' + data.secure_url + '" target="_blank">View Image</a>';
+                } else {
+                    document.getElementById('status').textContent = '❌ Upload failed';
+                }
+            })
+            .catch(err => {
+                document.getElementById('status').textContent = '❌ Error: ' + err.message;
+            });
+        }
+    </script>
+</body>
+</html>
