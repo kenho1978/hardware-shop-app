@@ -881,22 +881,27 @@
                 var compressed = await compressImage(file);
                 status.textContent = 'Uploading to cloud...';
                 
-                // Upload to our server -> Cloudinary
-                var response = await fetch(API + '/upload', {
+                // Direct upload to Cloudinary from browser
+                var formData = new FormData();
+                formData.append('file', compressed);
+                formData.append('upload_preset', 'hardware-shop');
+                formData.append('cloud_name', 'djpavkcx0');
+                formData.append('api_key', '152924867596416');
+                
+                var response = await fetch('https://api.cloudinary.com/v1_1/djpavkcx0/image/upload', {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ image: compressed })
+                    body: formData
                 });
                 
                 var data = await response.json();
-                if (data.success && data.url) {
+                if (data.secure_url) {
                     status.textContent = '✅ Uploaded to cloud!';
                     status.style.color = 'green';
-                    preview.src = data.url;
+                    preview.src = data.secure_url;
                     preview.style.display = 'block';
-                    window.currentImage = data.url;
+                    window.currentImage = data.secure_url;
                 } else {
-                    throw new Error(data.error || 'Upload failed');
+                    throw new Error('Upload failed');
                 }
             } catch (err) {
                 status.textContent = '❌ Error: ' + err.message;
